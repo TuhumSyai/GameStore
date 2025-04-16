@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Создать учетную запись</title>
+  <link rel="stylesheet" href="createacc.css" />
+</head>
+<body>
+  <div class="create-container">
+    <img src="../icons/logo.png" alt="Logo" class="logo" />
+    
+    <div class="form-wrapper">
+      <h2 class="sub">Создать учётную запись</h2>
+      <form id="dob-form">
+        <p class="subtitle">
+          Укажите свою дату рождения. Это требуется для того, чтобы гарантировать вам удобный и безопасный сервис.
+        </p>
+  
+        <label for="day" class="birth">Дата рождения</label>
+        <div class="dob-selects">
+          <select id="day" required>
+            <option value="">День</option>
+            <!-- дни генерируются в JS -->
+          </select>
+        
+          <select id="month" required>
+            <option value="">Месяц</option>
+            <option value="1">Январь</option>
+            <option value="2">Февраль</option>
+            <option value="3">Март</option>
+            <option value="4">Апрель</option>
+            <option value="5">Май</option>
+            <option value="6">Июнь</option>
+            <option value="7">Июль</option>
+            <option value="8">Август</option>
+            <option value="9">Сентябрь</option>
+            <option value="10">Октябрь</option>
+            <option value="11">Ноябрь</option>
+            <option value="12">Декабрь</option>
+          </select>
+        
+          <input type="number" id="year" placeholder="Год" min="1905" max="2011" required />
+        </div>
+        
+  
+        <button id="continue-btn" class="continue-btn" disabled>Продолжить</button>
+      </form>
+  
+      <p class="bottom-text">У вас уже есть учётная запись? <a href="login.html">Войти</a></p>
+      <a class="policy" href="#">Политика конфиденциальности</a>
+    </div>
+  </div>
+  
+
+  <script src="nacc.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,244 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  body {
+    background-color: #101014;
+    color: white;
+  }
+  
+  /* ---------------- HEADER ----------------- */
+  
+  .header {
+    background-color: #121216;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 24px;
+  }
+  
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+  }
+  
+  .logo {
+    height: 45px;
+    cursor: pointer;
+  }
+  
+  .arrow {
+    color: white;
+    font-size: 10px;
+    margin-left: 3px;
+    cursor: pointer;
+  }
+  
+  .logo-dropdown {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  .logo-dropdown:hover .dropdown-menu {
+    display: flex;
+  }
+  
+  .dropdown-menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 36px;
+    left: 0;
+    background-color: #1a1a1a;
+    border-radius: 4px;
+    padding: 8px;
+    min-width: 120px;
+    z-index: 10;
+  }
+  
+  .dropdown-menu a {
+    color: white;
+    text-decoration: none;
+    padding: 6px 8px;
+    border-radius: 4px;
+  }
+  
+  .dropdown-menu a:hover {
+    background-color: #333;
+  }
+  
+  .store-name {
+    font-weight: 700;
+    font-size: 18px;
+    color: white;
+    letter-spacing: 1px;
+  }
+  
+  .header-nav {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    margin-right: 760px;
+  }
+  
+  .header-nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 450;
+  }
+  
+  .dropdown {
+    position: relative;
+  }
+  
+  .dropdown-content {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 28px;
+    background-color: #1a1a1a;
+    padding: 10px;
+    border-radius: 6px;
+    z-index: 10;
+    min-width: 160px;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: flex;
+  }
+  
+  .dropdown-content a {
+    text-decoration: none;
+    color: white;
+    padding: 5px 8px;
+    border-radius: 4px;
+  }
+  
+  .dropdown-content a:hover {
+    background-color: #333;
+  }
+  
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .lang-btn {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: white;
+  }
+  
+  .login-btn {
+    background-color: #2a2a2e;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 12px;
+    font-size: 15px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  
+  .download-btn {
+    background-color: #29a8ff;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  
+  /* ------------- SEARCH SECTION ------------- */
+  
+  .search-section {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding: 16px 24px;
+    background-color: #101014;
+    margin-left: 180px;
+    margin-top: 30px;
+  }
+  
+  .search-bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-bar input {
+    background-color: #1e1e22;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 16px 10px 36px;
+    color: #ccc;
+    outline: none;
+    width: 220px;
+    transition: background-color 0.2s ease;
+  }
+  
+  .search-bar input:hover,
+  .search-bar input:focus,
+  .search-bar input:not(:placeholder-shown) {
+    background-color: #3a3a3e;
+    color: white;
+  }
+  
+  .search-icon {
+    position: absolute;
+    left: 12px;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+  
+  
+  
+  .page-nav {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  
+  .nav-link {
+    color: #aaa;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s ease;
+  }
+  
+  .nav-link:hover {
+    color: white;
+  }
+  
+  .nav-link.active {
+    color: white;
+    font-weight: bold;
+  }
+  
+  
+  .page-nav a {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 16px;
+  }
+  
+  .page-nav a:hover {
+    color: white;
+  }

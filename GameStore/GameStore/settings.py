@@ -76,10 +76,15 @@ WSGI_APPLICATION = 'GameStore.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',  # Используем PostgreSQL
+        'NAME': 'GameStore',  # Имя базы данных, которую создал в PostgreSQL
+        'USER': 'Admin',  # Имя пользователя для подключения
+        'PASSWORD': '12345678',  # Пароль пользователя
+        'HOST': 'localhost',  # Хост базы данных (для локальной базы)
+        'PORT': '5432',  # Порт, обычно по умолчанию 5432
     }
 }
+
 
 
 # Password validation
@@ -122,3 +127,18 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Celery настройки
+CELERY_BROKER_URL = 'redis://default:gbdQVm9isCgQUn2VfS2SKcC4ZPcKNaFR@redis-12310.crce198.eu-central-1-3.ec2.redns.redis-cloud.com:12310/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+
+from celery.schedules import crontab
+
+CELERY_BEAT_SCHEDULE = {
+    'update-games-every-24-hours': {
+        'task': 'your_project.tasks.update_games',  # путь к задаче
+        'schedule': crontab(minute=0, hour=0),  # Каждые 24 часа в полночь
+    },
+}
