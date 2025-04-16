@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-y=2&=q6un*ak%j8ow0f5_zyhif-%(+n5_nwm9o&otc#s-sgsqm
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'GameStore-django.com']
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -76,12 +76,12 @@ WSGI_APPLICATION = 'GameStore.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',  # Используем PostgreSQL
-        'NAME': 'GameStore',  # Имя базы данных, которую создал в PostgreSQL
-        'USER': 'Admin',  # Имя пользователя для подключения
-        'PASSWORD': '12345678',  # Пароль пользователя
-        'HOST': 'localhost',  # Хост базы данных (для локальной базы)
-        'PORT': '5432',  # Порт, обычно по умолчанию 5432
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'GameStore',
+        'USER': 'Admin',
+        'PASSWORD': '12345678',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
