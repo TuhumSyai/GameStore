@@ -21,6 +21,7 @@ class Store(models.Model):
 
 class Game(models.Model):
     name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
     released = models.DateField()
     rating = models.FloatField()
     rawg_id = models.IntegerField(unique=True)  # Уникальный идентификатор игры
