@@ -1,17 +1,22 @@
+{% load static %}
+
+
+
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <title>GameStore</title>
+  <title>{{ title }}</title>
 </head>
 <body>
   <header class="header">
     <div class="header-left">
       <div class="logo-dropdown">
-        <img src="../icons/logo.png" alt="Logo" class="logo" />
+        <img src="{% static 'img/logo/logo.png' %}" alt="Logo" class="logo" />
         <span class="arrow">▾</span>
         <div class="dropdown-menu">
           <a href="#">Главная</a>
@@ -33,8 +38,8 @@
       </div>
     </nav>
     <div class="header-right">
-      <img src="../icons/language.png" alt="language" width="22" height="22">
-      <a href="login.html" class="login-btn" >Войти</a>
+      <img src="{% static 'img/reg/language.png' %}" alt="language" width="22" height="22">
+      <a href="{% url 'login' %}" class="login-btn" >Войти</a>
       <button class="download-btn">Загрузить</button>
     </div>
   </header>
