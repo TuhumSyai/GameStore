@@ -20,5 +20,7 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name="index"),
+    path('login/', views.loginForm, name="login"),
+    path('registration/', views.regForm, name="reg"),
     path('game-list/', views.game_list, name="game_list")
 ]

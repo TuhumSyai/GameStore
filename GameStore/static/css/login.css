@@ -130,10 +130,10 @@ button[type="submit"].active {
   cursor: pointer;
 }
 
-.social.steam { background-color: #2b6c9a; background-image: url('../icons/steam.png'); background-size: 35%;}
-.social.facebook { background-color: #2f84f3; background-image: url('../icons/facebook.png'); background-size: 65%;}
-.social.google { background-color: #fefdfd; background-image: url('../icons/google.png'); background-size: 80%;}
-.social.apple { background-color: #ffffff; background-image: url('../icons/apple.png'); background-size: 70%;}
+.social.steam { background-color: #2b6c9a; background-image: url('../img/reg/steam.png'); background-size: 35%;}
+.social.facebook { background-color: #2f84f3; background-image: url('../img/reg/facebook.png'); background-size: 65%;}
+.social.google { background-color: #fefdfd; background-image: url('../img/reg/google.png'); background-size: 80%;}
+.social.apple { background-color: #ffffff; background-image: url('../img/reg/apple.png'); background-size: 70%;}
 
 
 .New-acc {
