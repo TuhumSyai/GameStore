@@ -1,67 +1,58 @@
+{% extends 'store/base_auth.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ title }}</title>
-  <link rel="stylesheet" href="{% static 'css/login.css' %}" />
-  <link rel="icon" href="{% static 'img/logo/logo.ico' %}" type="image/x-icon" />
-</head>
-<body>
-  <div class="login-container">
-    <a href="{% url 'index' %}"><img src="{% static 'img/logo/logo.png' %}" alt="Logo" class="logo" /></a>
-    <h2>Зарегистрироваться</h2>
-    <form method="POST" id="register-form" autocomplete="off">
-      {% csrf_token %}
-      {% if error %}
-        <p style="color:red;">{{ error }}</p>
-      {% endif %}
+{% block title %}{{ title }}{% endblock %}
 
-      {% if messages %}
-      <ul class="messages">
-        {% for message in messages %}
-        <li class="{{ message.tags }}">{{ message }}</li>
-        {% endfor %}
-      </ul>
-      {% endif %}
+{% block content %}
+<h2>Зарегистрироваться</h2>
+<form method="POST" id="register-form" autocomplete="off">
+  {% csrf_token %}
 
-      <div class="input-block">
-        <label for="username">Имя пользователя</label>
-        <input type="text" name="username" id="username" required autocomplete="username" />
-      </div>
-      <div class="input-block">
-        <label for="email">Адрес электронной почты</label>
-        <input type="email" name="email" id="email" required autocomplete="username" />
-        <span class="error-text">Обязательно</span>
-      </div>
-      <div class="input-block">
-        <label for="birthdate">Дата рождения</label>
-        <input type="date" name="birthdate" id="birthdate" required autocomplete="off" />
-      </div>
-      <div class="input-block">
-        <label for="password">Пароль</label>
-        <input type="password" name="password" id="password" required autocomplete="new-password" />
-      </div>
-      <div class="input-block">
-        <label for="password2">Повторите пароль</label>
-        <input type="password" name="password2" id="password2" required autocomplete="new-password" />
-      </div>
+  {% if error %}
+    <p style="color:red;">{{ error }}</p>
+  {% endif %}
 
-      <div class="checkbox-policy">
-        <label>
-            <input type="checkbox" name="agree" required />
-            <span>Я принимаю <a href="#" class="policy-link">Политику конфиденциальности</a></span>
-        </label>
-</div>
+  {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+    <li class="{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
 
-      <button type="submit" id="submit-btn">Зарегистрироваться</button>
-    </form>
-
+  <div class="input-block">
+    <label for="username">Имя пользователя</label>
+    <input type="text" name="username" id="username" required autocomplete="username" />
+  </div>
+  <div class="input-block">
+    <label for="email">Адрес электронной почты</label>
+    <input type="email" name="email" id="email" required autocomplete="username" />
+    <span class="error-text">Обязательно</span>
+  </div>
+  <div class="input-block">
+    <label for="birthdate">Дата рождения</label>
+    <input type="date" name="birthdate" id="birthdate" required autocomplete="off" />
+  </div>
+  <div class="input-block">
+    <label for="password">Пароль</label>
+    <input type="password" name="password" id="password" required autocomplete="new-password" />
+  </div>
+  <div class="input-block">
+    <label for="password2">Повторите пароль</label>
+    <input type="password" name="password2" id="password2" required autocomplete="new-password" />
   </div>
 
-  <script src="{% static 'js/script.js' %}"></script>
-  <script src="{% static 'js/reg-script.js' %}"></script>
-</body>
-</html>
+  <div class="checkbox-policy">
+    <label>
+      <input type="checkbox" name="agree" required />
+      <span>Я принимаю <a href="#" class="policy-link">Политику конфиденциальности</a></span>
+    </label>
+  </div>
+
+  <button type="submit" id="submit-btn">Зарегистрироваться</button>
+</form>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/reg-script.js' %}"></script>
+{% endblock %}
