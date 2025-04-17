@@ -7,12 +7,14 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ title }}</title>
   <link rel="stylesheet" href="{% static 'css/style.css' %}" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <title>{{ title }}</title>
+  <link rel="icon" href="{% static 'img/logo/logo.ico' %}" type="image/x-icon" />
 </head>
 <body>
+  <!-- Header -->
   <header class="header">
     <div class="header-left">
       <div class="logo-dropdown">
@@ -26,6 +28,7 @@
       </div>
       <span class="store-name">STORE</span>
     </div>
+
     <nav class="header-nav">
       <a href="#">Поддержка</a>
       <div class="dropdown">
@@ -37,32 +40,41 @@
         </div>
       </div>
     </nav>
+
     <div class="header-right">
-      <img src="{% static 'img/reg/language.png' %}" alt="language" width="22" height="22">
-      <a href="{% url 'login' %}" class="login-btn" >Войти</a>
+      <img src="{% static 'img/reg/language.png' %}" alt="Язык" width="22" height="22" />
+
+      {% if user.is_authenticated %}
+        <p>Привет, {{ user.username }}!</p>
+        <form method="post" action="{% url 'logout' %}" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit" class="login-btn">Выйти</button>
+        </form>
+      {% else %}
+        <a href="{% url 'login' %}" class="login-btn">Войти</a>
+      {% endif %}
+
       <button class="download-btn">Загрузить</button>
     </div>
   </header>
 
+  <!-- Поисковая строка и навигация -->
   <div class="search-section">
     <div class="search-bar">
       <input type="text" placeholder="Искать в магазине" />
       <span class="search-icon">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="11" cy="11" r="8" stroke="#aaa" stroke-width="2"/>
-          <line x1="16.5" y1="16.5" x2="22" y2="22" stroke="#aaa" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="11" cy="11" r="8" stroke="#aaa" stroke-width="2" />
+          <line x1="16.5" y1="16.5" x2="22" y2="22" stroke="#aaa" stroke-width="2" stroke-linecap="round" />
         </svg>
       </span>
     </div>
+
     <nav class="page-nav">
       <a href="#">Главное</a>
       <a href="#">Все игры</a>
       <a href="#">Новости</a>
     </nav>
   </div>
-  
-  
-  
-
 </body>
 </html>

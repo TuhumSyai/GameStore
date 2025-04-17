@@ -145,3 +145,47 @@ button[type="submit"].active {
   padding-top: 15px;
   color: #25b1f2;
 }
+
+.checkbox-policy {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #ccc;
+  margin-top: 10px;
+}
+
+.checkbox-policy input[type="checkbox"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #555;
+  border-radius: 4px;
+  background-color: transparent;
+  margin-right: 10px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.checkbox-policy input[type="checkbox"]:checked {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.checkbox-policy input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 1px;
+  left: 4px;
+  font-size: 14px;
+  color: white;
+}
+
+.policy-link {
+  color: #25b1f2;
+  text-decoration: underline;
+}
+
+.policy-link:hover {
+  text-decoration: none;
+}

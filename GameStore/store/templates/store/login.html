@@ -7,12 +7,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ title }}</title>
   <link rel="stylesheet" href="{% static 'css/login.css' %}" />
+  <link rel="icon" href="{% static 'img/logo/logo.ico' %}" type="image/x-icon" />
 </head>
 <body>
   <div class="login-container">
     <a href="{% url 'index' %}"><img src="{% static 'img/logo/logo.png' %}" alt="Logo" class="logo" /></a>
     <h2>Войти</h2>
-    <form id="login-form" method="post" novalidate autocomplete="off">
+    <form id="login-form" method="post" autocomplete="off">
       {% csrf_token %}
 
       {% if messages %}
@@ -25,11 +26,11 @@
 
       <div class="input-block">
         <label for="email">Адрес электронной почты</label>
-        <input type="email" id="email" name="email" required autocomplete="new-email" />
+        <input type="email" id="email" name="email" required autocomplete="username" />
       </div>
       <div class="input-block">
         <label for="password">Пароль</label>
-        <input type="password" id="password" name="password" required autocomplete="new-password" />
+        <input type="password" id="password" name="password" required autocomplete="current-password" />
       </div>
       <a href="#" class="forgot-password">Забыли пароль?</a>
       <button type="submit" id="submit-btn">Войти</button>
@@ -44,10 +45,11 @@
 
     <a href="{% url 'reg' %}" class="New-acc">Создать учетную запись</a>
 
-    <a href="" class="policy">Политика конфиденциальности</a>
+    <a href="#" class="policy">Политика конфиденциальности</a>
   </div>
 
   <script>
+    // Убираем автозаполнение для всех полей ввода
     document.querySelectorAll('input').forEach(function(input) {
       input.setAttribute('autocomplete', 'off');
     });
