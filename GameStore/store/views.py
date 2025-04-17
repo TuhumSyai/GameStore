@@ -8,9 +8,9 @@ User = get_user_model()
 
 # Create your views here.
 def index(request):
-    context = {
-        'title': 'GameStore',
-    }
+
+    context = {'title': 'GameStore - Главная'}
+    
     return render(request, 'store/index.html', context)
 
 def loginForm(request):
@@ -32,13 +32,13 @@ def loginForm(request):
         else:
             messages.error(request, 'Неверный email или пароль')
 
-    context = {
-        'title': 'Sign In',
-    }
+    context = {'title': 'GameStore - Авторизация'}
+
     return render(request, 'store/login.html', context)
 
 def regForm(request):
-    context = {'title': 'Sign Up'}
+
+    context = {'title': 'GameStore - Регистрация'}
 
     if request.method == 'POST':
         email = request.POST.get('email')

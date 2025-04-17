@@ -7,12 +7,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ title }}</title>
   <link rel="stylesheet" href="{% static 'css/login.css' %}" />
+  <link rel="icon" href="{% static 'img/logo/logo.ico' %}" type="image/x-icon" />
 </head>
 <body>
   <div class="login-container">
     <a href="{% url 'index' %}"><img src="{% static 'img/logo/logo.png' %}" alt="Logo" class="logo" /></a>
     <h2>Зарегистрироваться</h2>
-    <form method="POST" id="login-form" novalidate autocomplete="off">
+    <form method="POST" id="register-form" autocomplete="off">
       {% csrf_token %}
       {% if error %}
         <p style="color:red;">{{ error }}</p>
@@ -26,14 +27,13 @@
       </ul>
       {% endif %}
 
-
       <div class="input-block">
         <label for="username">Имя пользователя</label>
-        <input type="text" name="username" id="username" required autocomplete="off" />
+        <input type="text" name="username" id="username" required autocomplete="username" />
       </div>
       <div class="input-block">
         <label for="email">Адрес электронной почты</label>
-        <input type="text" name="email" id="email" required autocomplete="off" />
+        <input type="email" name="email" id="email" required autocomplete="username" />
         <span class="error-text">Обязательно</span>
       </div>
       <div class="input-block">
@@ -42,31 +42,26 @@
       </div>
       <div class="input-block">
         <label for="password">Пароль</label>
-        <input type="password" name="password" id="password" required autocomplete="off" />
+        <input type="password" name="password" id="password" required autocomplete="new-password" />
       </div>
       <div class="input-block">
         <label for="password2">Повторите пароль</label>
-        <input type="password" name="password2" id="password2" required autocomplete="off" />
+        <input type="password" name="password2" id="password2" required autocomplete="new-password" />
       </div>
+
+      <div class="checkbox-policy">
+        <label>
+            <input type="checkbox" name="agree" required />
+            <span>Я принимаю <a href="#" class="policy-link">Политику конфиденциальности</a></span>
+        </label>
+</div>
+
       <button type="submit" id="submit-btn">Зарегистрироваться</button>
     </form>
-    <div class="divider"><span>или войти с</span></div>
-    <div class="socials">
-      <button class="social steam"></button>
-      <button class="social facebook"></button>
-      <button class="social google"></button>
-      <button class="social apple"></button>
-    </div>
 
-    <a href="" class="policy">Политика конфиденциальности</a>
   </div>
 
-  <script>
-    document.querySelectorAll('input').forEach(function(input) {
-      input.setAttribute('autocomplete', 'off');
-    });
-  </script>
-
   <script src="{% static 'js/script.js' %}"></script>
+  <script src="{% static 'js/reg-script.js' %}"></script>
 </body>
 </html>
