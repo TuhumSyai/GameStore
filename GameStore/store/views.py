@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model, login, authenticate
 from django.contrib import messages
 from .services.rawg import get_games
 from django.http import JsonResponse
+from .forms import RegisterForm, LoginForm
 
 User = get_user_model()
 
@@ -14,54 +15,43 @@ def index(request):
     return render(request, 'store/index.html', context)
 
 def loginForm(request):
+    form = LoginForm(request.POST or None)
+    
     if request.method == 'POST':
-        email = request.POST.get('email')
-        password = request.POST.get('password')
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, username=username, password=password)
 
-        # Ищем пользователя по email
-        try:
-            from .models import CustomUser
-            user = CustomUser.objects.get(email=email)
-            user = authenticate(request, username=user.username, password=password)
-        except CustomUser.DoesNotExist:
-            user = None
+            if user is not None:
+                login(request, user)
+                return redirect('/')
+            else:
+                messages.error(request, 'Неверный логин или пароль')
 
-        if user is not None:
-            login(request, user)
-            return redirect('/')  # замените на нужный URL
-        else:
-            messages.error(request, 'Неверный email или пароль')
-
-    context = {'title': 'GameStore - Авторизация'}
-
+    context = {
+        'form': form,
+        'title': 'GameStore - Авторизация'
+    }
     return render(request, 'store/login.html', context)
 
 def regForm(request):
-
     context = {'title': 'GameStore - Регистрация'}
 
     if request.method == 'POST':
-        email = request.POST.get('email')
-        username = request.POST.get('username')
-        birthdate = request.POST.get('birthdate')  # формат: 'YYYY-MM-DD'
-        password = request.POST.get('password')
-
-        # Проверка, существует ли пользователь с таким email
-        if User.objects.filter(email=email).exists():
-            messages.error(request, 'Пользователь с таким email уже существует.')
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password'])  # хэшируем пароль
+            user.save()
+            login(request, user)  # логиним пользователя
+            return redirect('/')
+        else:
+            context['form'] = form
             return render(request, 'store/reg.html', context)
 
-        # Создание нового пользователя
-        user = User.objects.create_user(
-            email=email,
-            username=username,
-            birthdate=birthdate,
-            password=password
-        )
-
-        login(request, user)  # автоматически логиним после регистрации
-        return redirect('/')  # перенаправление после регистрации
-
+    form = RegisterForm()
+    context['form'] = form
     return render(request, 'store/reg.html', context)
 
 def game_list(request):

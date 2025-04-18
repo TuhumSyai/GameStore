@@ -54,13 +54,11 @@ input {
 input:focus {
   outline: none;
   border-color: #666;
-  background-color: #1e1e22;
 }
 
 input:valid,
 input:invalid {
   background-color: #1e1e22;
-  box-shadow: none;
 }
 
 input[type="date"] {
@@ -77,13 +75,11 @@ input[type="date"] {
 input[type="date"]:focus {
   outline: none;
   border-color: #666;
-  background-color: #1e1e22;
 }
 
 input[type="date"]:valid,
 input[type="date"]:invalid {
   background-color: #1e1e22;
-  box-shadow: none;
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
@@ -96,7 +92,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 input[type="date"]:focus::-webkit-calendar-picker-indicator {
   background-color: #007bff;
 }
-
 
 .error-text {
   font-size: 12px;
@@ -119,11 +114,13 @@ button[type="submit"] {
   background-color: #2f2f33;
   color: white;
   cursor: not-allowed;
+  opacity: 0.6;
 }
 
 button[type="submit"].active {
   background-color: #007bff;
   cursor: pointer;
+  opacity: 1;
 }
 
 .divider {
@@ -169,7 +166,6 @@ button[type="submit"].active {
 .social.facebook { background-color: #2f84f3; background-image: url('../img/reg/facebook.png'); background-size: 65%;}
 .social.google { background-color: #fefdfd; background-image: url('../img/reg/google.png'); background-size: 80%;}
 .social.apple { background-color: #ffffff; background-image: url('../img/reg/apple.png'); background-size: 70%;}
-
 
 .New-acc {
   padding-top: 20px;
