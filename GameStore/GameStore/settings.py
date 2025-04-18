@@ -144,7 +144,7 @@ from celery.schedules import crontab
 
 CELERY_BEAT_SCHEDULE = {
     'update-games-every-24-hours': {
-        'task': 'your_project.tasks.update_games',  # путь к задаче
+        'task': 'store.services.tasks.update_games',  # путь к задаче
         'schedule': crontab(minute=0, hour=0),  # Каждые 24 часа в полночь
     },
 }
