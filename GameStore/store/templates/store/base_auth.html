@@ -1,8 +1,5 @@
 {% load static %}
 
-
-
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -15,14 +12,17 @@
 </head>
 <body>
   <div class="login-container">
+    <!-- Логотип, ведущий на главную страницу -->
     <a href="{% url 'index' %}"><img src="{% static 'img/logo/logo.png' %}" alt="Logo" class="logo" /></a>
     
+    <!-- Основной контент страницы (форма входа или регистрации) -->
     {% block content %}{% endblock %}
     
+    <!-- Дополнительные ссылки, такие как политика конфиденциальности или создание аккаунта -->
     {% block extra_links %}{% endblock %}
   </div>
 
-  <script src="{% static 'js/script.js' %}"></script>
+  <!-- Скрипты -->
   {% block extra_js %}{% endblock %}
 </body>
 </html>

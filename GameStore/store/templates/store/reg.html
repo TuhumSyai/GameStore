@@ -8,48 +8,32 @@
 <form method="POST" id="register-form" autocomplete="off">
   {% csrf_token %}
 
-  {% if error %}
-    <p style="color:red;">{{ error }}</p>
-  {% endif %}
-
   {% if messages %}
   <ul class="messages">
     {% for message in messages %}
-    <li class="{{ message.tags }}">{{ message }}</li>
+    <li class="message {{ message.tags }}">{{ message }}</li>
     {% endfor %}
   </ul>
   {% endif %}
 
+  {% for field in form %}
   <div class="input-block">
-    <label for="username">Имя пользователя</label>
-    <input type="text" name="username" id="username" required autocomplete="username" />
+    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {{ field }}
+    {% if field.help_text %}
+      <small style="color: gray;">{{ field.help_text }}</small>
+    {% endif %}
+    {% if field.errors %}
+      <div class="error-message email-error password-error" style="color: red;">
+        {{ field.errors|striptags }}
+      </div>
+    {% endif %}
   </div>
-  <div class="input-block">
-    <label for="email">Адрес электронной почты</label>
-    <input type="email" name="email" id="email" required autocomplete="username" />
-    <span class="error-text">Обязательно</span>
-  </div>
-  <div class="input-block">
-    <label for="birthdate">Дата рождения</label>
-    <input type="date" name="birthdate" id="birthdate" required autocomplete="off" />
-  </div>
-  <div class="input-block">
-    <label for="password">Пароль</label>
-    <input type="password" name="password" id="password" required autocomplete="new-password" />
-  </div>
-  <div class="input-block">
-    <label for="password2">Повторите пароль</label>
-    <input type="password" name="password2" id="password2" required autocomplete="new-password" />
-  </div>
+  {% endfor %}
 
-  <div class="checkbox-policy">
-    <label>
-      <input type="checkbox" name="agree" required />
-      <span>Я принимаю <a href="#" class="policy-link">Политику конфиденциальности</a></span>
-    </label>
-  </div>
-
-  <button type="submit" id="submit-btn">Зарегистрироваться</button>
+  <button type="submit" id="submit-btn" {% if not form.is_bound or not form.is_valid %}disabled{% endif %}>
+    Зарегистрироваться
+  </button>
 </form>
 {% endblock %}
 

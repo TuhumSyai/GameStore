@@ -7,28 +7,40 @@
 <h2>Войти</h2>
 <form id="login-form" method="post" autocomplete="off">
   {% csrf_token %}
-
+  
   {% if messages %}
-  <ul class="messages">
-    {% for message in messages %}
-    <li class="{{ message.tags }}">{{ message }}</li>
-    {% endfor %}
-  </ul>
+    <ul class="messages">
+      {% for message in messages %}
+      <li class="{{ message.tags }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
   {% endif %}
+  
+  <div class="error-message" style="display:none; color:red;"></div>
 
   <div class="input-block">
-    <label for="email">Адрес электронной почты</label>
-    <input type="email" id="email" name="email" required autocomplete="username" />
+    {{ form.username.label_tag }}
+    {{ form.username }}
+    {% if form.username.errors %}
+      <div class="error-text">{{ form.username.errors.0 }}</div>
+    {% endif %}
   </div>
+
   <div class="input-block">
-    <label for="password">Пароль</label>
-    <input type="password" id="password" name="password" required autocomplete="current-password" />
+    {{ form.password.label_tag }}
+    {{ form.password }}
+    {% if form.password.errors %}
+      <div class="error-text">{{ form.password.errors.0 }}</div>
+    {% endif %}
   </div>
+
   <a href="#" class="forgot-password">Забыли пароль?</a>
-  <button type="submit" id="submit-btn">Войти</button>
+
+  <button type="submit" id="submit-btn" disabled>Войти</button>
 </form>
 
 <div class="divider"><span>или войти с</span></div>
+
 <div class="socials">
   <button class="social steam"></button>
   <button class="social facebook"></button>
@@ -42,10 +54,7 @@
 <a href="#" class="policy">Политика конфиденциальности</a>
 {% endblock %}
 
+
 {% block extra_js %}
-<script>
-  document.querySelectorAll('input').forEach(function(input) {
-    input.setAttribute('autocomplete', 'off');
-  });
-</script>
+ <script src="{% static 'js/script.js' %}"></script>
 {% endblock %}

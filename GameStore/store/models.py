@@ -56,10 +56,17 @@ class CustomUserManager(BaseUserManager):
         return user
 
 
+from django.conf import settings
+
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=150, unique=True)
-    birthdate = models.DateField()
+    birthdate = models.DateField(null=True, blank=True)
+    avatar = models.ImageField(
+        upload_to='avatars/',
+        default='avatars/default.png',
+        blank=True
+    )
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)
@@ -70,4 +77,4 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['email', 'birthdate']
 
     def __str__(self):
-        return self.email
+        return self.username
