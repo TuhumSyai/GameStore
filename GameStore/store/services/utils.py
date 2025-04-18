@@ -17,57 +17,55 @@ def get_data_from_rawg(page=1):
     return response.json()  # возвращает данные в формате JSON
 
 def update_games_from_api():
-    """
-    Обновляет или добавляет данные о играх в базу данных.
-    """
     page = 1
     while True:
         data = get_data_from_rawg(page)
         games = data['results']
 
         for game in games:
-            # Обрабатываем все необходимые данные
             name = game.get('name')
             released = game.get('released')
             rating = game.get('rating')
-            description = game.get('description', '')  # Обработка отсутствия описания
+            description = game.get('description', '')
+            background_image = game.get('background_image')  # Добавляем обложку
 
-            # Обработка дополнительной информации (например, платформы, жанры, магазины)
             platforms = game.get('platforms', [])
             genres = game.get('genres', [])
             stores = game.get('stores', [])
 
-            # Обновляем или добавляем игру в базу данных
             game_obj, created = Game.objects.update_or_create(
                 rawg_id=game['id'],
                 defaults={
                     'name': name,
                     'released': released,
                     'rating': rating,
-                    'description': description
+                    'description': description,
+                    'background_image': background_image
                 }
             )
 
-            # Обработка жанров
+            # Жанры
             for genre in genres:
-                genre_obj, created = Genre.objects.get_or_create(name=genre['name'])
+                genre_obj, _ = Genre.objects.get_or_create(name=genre['name'])
                 game_obj.genres.add(genre_obj)
 
-            # Обработка платформ
+            # Платформы
             for platform in platforms:
-                platform_obj, created = Platform.objects.get_or_create(name=platform['platform']['name'])
+                platform_obj, _ = Platform.objects.get_or_create(name=platform['platform']['name'])
                 game_obj.platforms.add(platform_obj)
 
-            # Обработка магазинов
+            # Магазины
             for store in stores:
-                store_obj, created = Store.objects.get_or_create(name=store['store']['name'], domain=store['store']['domain'])
+                store_obj, _ = Store.objects.get_or_create(
+                    name=store['store']['name'],
+                    domain=store['store']['domain']
+                )
                 game_obj.stores.add(store_obj)
 
-        # Если на текущей странице нет данных, завершаем цикл
         if len(games) < 100:
             break
 
-        page += 1  # Переход к следующей странице
+        page += 1
 
 
 import redis
