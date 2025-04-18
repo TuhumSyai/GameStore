@@ -27,6 +27,7 @@ class Game(models.Model):
     released = models.DateField()
     rating = models.FloatField()
     rawg_id = models.IntegerField(unique=True)  # Уникальный идентификатор игры
+    background_image = models.URLField(blank=True, null=True)  # Обложка игры
     genres = models.ManyToManyField(Genre)
     platforms = models.ManyToManyField(Platform)
     stores = models.ManyToManyField(Store)
