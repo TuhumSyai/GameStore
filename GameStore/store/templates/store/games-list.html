@@ -5,17 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="games-list.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <title>GameStore</title>
+  <title>GameStore — Каталог игр</title>
 </head>
 <body>
+
+  <!-- ========== HEADER ========== -->
   <header class="header">
     <div class="header-left">
       <div class="logo-dropdown">
         <img src="../icons/logo.png" alt="Logo" class="logo" />
         <span class="arrow">▾</span>
         <div class="dropdown-menu">
-          <a href="#">Главная</a>
-          <a href="#">Каталог</a>
+          <a href="index.html">Главная</a>
+          <a href="games-list.html">Каталог</a>
           <a href="#">О нас</a>
         </div>
       </div>
@@ -34,14 +36,16 @@
     </nav>
     <div class="header-right">
       <img src="../icons/language.png" alt="language" width="22" height="22">
-      <a href="login.html" class="login-btn" >Войти</a>
+      <a href="login.html" class="login-btn">Войти</a>
       <button class="download-btn">Загрузить</button>
     </div>
   </header>
+  <!-- ============================= -->
 
+  <!-- ========== SEARCH & NAV ========== -->
   <div class="search-section">
     <div class="search-bar">
-      <input type="text" placeholder="Искать в магазине" />
+      <input id="searchInput" type="text" placeholder="Искать в магазине" />
       <span class="search-icon">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="11" cy="11" r="8" stroke="#aaa" stroke-width="2"/>
@@ -52,11 +56,43 @@
     <nav class="page-nav">
       <a href="index.html" class="nav-link">Главное</a>
       <a href="games-list.html" class="nav-link active">Все игры</a>
+      <a href="#">Новости</a>
     </nav>
   </div>
-  
-  
-  <script src="script.js"></script>
+  <!-- ======================================= -->
 
+  <!-- ========== КАТАЛОГ И ФИЛЬТРЫ ========== -->
+  <div class="catalog-container">
+
+    <aside class="catalog-filters">
+      <h3>Фильтры</h3>
+
+      <div class="filter-group">
+        <label for="sortSelect">Показать:</label>
+        <select id="sortSelect">
+          <option value="added">Популярное</option>
+          <option value="-released">Новинки</option>
+          <option value="-metacritic">Рейтинг</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label>Жанры:</label>
+        <div id="genreFilters">
+          <!-- JS подставит сюда чекбоксы жанров -->
+        </div>
+      </div>
+
+      <button id="resetFilters">Сбросить фильтры</button>
+    </aside>
+
+    <section id="gamesGrid" class="games-grid">
+      <!-- JS подставит сюда карточки игр -->
+    </section>
+
+  </div>
+  <!-- ======================================= -->
+
+  <script src="game-list.js"></script>
 </body>
 </html>

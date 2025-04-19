@@ -1,9 +1,8 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
-  }
+  margin:0; 
+  padding:0; 
+  box-sizing:border-box; 
+  font-family:'Inter',sans-serif; }
   
   body {
     background-color: #101014;
@@ -242,3 +241,117 @@
   .page-nav a:hover {
     color: white;
   }
+
+  /* ====== КАТАЛОГ И ФИЛЬТРЫ ====== */
+.catalog-container {
+  display: flex;
+  max-width: 1200px;
+  margin: 40px auto;
+  gap: 24px;
+}
+
+.catalog-filters {
+  width: 240px;
+  background: #181818;
+  padding: 16px;
+  border-radius: 8px;
+  color: #ccc;
+}
+
+.catalog-filters h3 {
+  margin-bottom: 12px;
+  color: #fff;
+  font-size: 18px;
+}
+
+.filter-group {
+  margin-bottom: 16px;
+}
+
+.filter-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.filter-group select {
+  width: 100%;
+  padding: 6px 8px;
+  background: #1e1e22;
+  border: none;
+  border-radius: 4px;
+  color: #ccc;
+}
+
+#genreFilters {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 4px;
+}
+
+/* прячем скроллбар в genreFilters */
+#genreFilters {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+#genreFilters::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+#genreFilters label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+#resetFilters {
+  width: 100%;
+  padding: 8px;
+  background: #2a2a2e;
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* сетка карточек игр */
+.games-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px,1fr));
+  gap: 16px;
+}
+
+.catalog-card {
+  background: #1a1a1a;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform .2s, box-shadow .2s;
+}
+.catalog-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+}
+
+.catalog-card img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+}
+
+.catalog-card .info {
+  padding: 8px;
+}
+.catalog-card .info h4 {
+  font-size: 14px;
+  color: #fff;
+  margin-bottom: 4px;
+}
+.catalog-card .info p {
+  font-size: 12px;
+  color: #888;
+}
