@@ -245,7 +245,7 @@
   /* ====== КАТАЛОГ И ФИЛЬТРЫ ====== */
 .catalog-container {
   display: flex;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 40px auto;
   gap: 24px;
 }
@@ -354,4 +354,78 @@
 .catalog-card .info p {
   font-size: 12px;
   color: #888;
+}
+
+
+/* Стили для стилизованного чекбокса */
+.genre-box {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #555;
+  border-radius: 4px;
+  background-color: #1e1e22;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.genre-box:checked {
+  background-color: #29a8ff;
+  border-color: #29a8ff;
+}
+
+.genre-box::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  width: 4px;
+  height: 8px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  display: none;
+}
+
+.genre-box:checked::after {
+  display: block;
+}
+
+
+.apply-btn, .reset-btn {
+  width: 100%;
+  padding: 10px;
+  background: #1e1e1e;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 12px;
+}
+
+.apply-btn:hover, .reset-btn:hover {
+  background: #2a2b2b;
+}
+
+.reset-btn {
+  display: inline-block;
+  width: 100%;
+  padding: 10px;
+  background: #1e1e1e;
+  color: white;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.reset-btn:hover {
+  background: #2a2b2b;
 }

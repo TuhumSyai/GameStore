@@ -4,7 +4,7 @@ from django.contrib import messages
 from .services.rawg import get_games
 from django.http import JsonResponse
 from .forms import RegisterForm, LoginForm
-from .models import Game
+from .models import Game, Genre
 import random
 from django.db.models import Q
 
@@ -81,9 +81,28 @@ def game_api(request):
     return JsonResponse(games, safe=False)
 
 def gamelist(request):
-     context = {
-         'title': 'GameStore - Игры'
-     }
-     
-     return render(request, 'store/games-list.html', context)
+    sort_option = request.GET.get('sort', 'added')
+    selected_genres = request.GET.getlist('genres')
+
+    games = Game.objects.all()
+
+    if selected_genres:
+        games = games.filter(genres__id__in=selected_genres).distinct()
+
+    if sort_option == 'added':
+        games = games.order_by('-id')  # предположим, новые сверху
+    elif sort_option == '-released':
+        games = games.order_by('-released')
+    elif sort_option == '-metacritic':
+        games = games.order_by('-rating')
+
+    context = {
+        'title': 'GameStore - Игры',
+        'games': games,
+        'genres': Genre.objects.all(),
+        'selected_genres': list(map(int, selected_genres)),  # для чекбоксов
+        'sort_option': sort_option,
+    }
+
+    return render(request, 'store/games-list.html', context)
 
