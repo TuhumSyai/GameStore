@@ -24,5 +24,6 @@ urlpatterns = [
     path('login/', views.loginForm, name="login"),
     path('registration/', views.regForm, name="reg"),
     path('logout/', LogoutView.as_view(next_page='index'), name='logout'),
-    path('game-list/', views.game_list, name="game_list")
+    path('game-api/', views.game_api, name="game_api"),
+    path('games-list/', views.gamelist, name="gamelist"),
 ]

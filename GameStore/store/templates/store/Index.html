@@ -6,35 +6,39 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ title }}</title>
-  <link rel="stylesheet" href="{% static 'css/style1.css' %}" />
+
+  <!-- Стили -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="icon" href="{% static 'img/logo/logo.ico' %}" type="image/x-icon" />
 </head>
 <body>
-  <!-- Header -->
+
+  <!-- Шапка сайта -->
   <header class="header">
     <div class="header-left">
       <div class="logo-dropdown">
-        <img src="{% static 'img/logo/logo.png' %}" alt="Logo" class="logo" />
+        <img src="{% static 'img/logo/logo.png' %}" alt="Логотип" class="logo" />
         <span class="arrow">▾</span>
-        <div class="dropdown-menu">
-          <a href="#">Главная</a>
-          <a href="#">Каталог</a>
+        <nav class="dropdown-menu">
+          <a href="{% url 'index' %}">Главная</a>
+          <a href="{% url 'gamelist' %}">Каталог</a>
           <a href="#">О нас</a>
-        </div>
+        </nav>
       </div>
       <span class="store-name">STORE</span>
     </div>
+
     <nav class="header-nav">
       <a href="#">Поддержка</a>
     </nav>
 
     <div class="header-right">
-      <img src="{% static 'img/reg/language.png' %}" alt="Язык" width="22" height="22" />
+      <img src="{% static 'img/reg/language.png' %}" alt="Сменить язык" width="22" height="22" />
 
       {% if user.is_authenticated %}
-        <p>Привет, {{ user.username }}!</p>
-        <form method="post" action="{% url 'logout' %}" style="display:inline;">
+        <p class="welcome-text">Привет, {{ user.username }}!</p>
+        <form method="post" action="{% url 'logout' %}" class="logout-form">
           {% csrf_token %}
           <button type="submit" class="login-btn">Выйти</button>
         </form>
@@ -46,50 +50,67 @@
     </div>
   </header>
 
-  <!-- Поисковая строка и навигация -->
-  <div class="search-section">
+  <!-- Поиск и навигация -->
+  <section class="search-section">
     <div class="search-bar">
-      <input id="searchInput" type="text" placeholder="Искать в магазине" />
+      <input id="searchInput" type="text" placeholder="Искать в магазине" aria-label="Поиск по магазинам" />
       <span class="search-icon">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="11" cy="11" r="8" stroke="#aaa" stroke-width="2" />
           <line x1="16.5" y1="16.5" x2="22" y2="22" stroke="#aaa" stroke-width="2" stroke-linecap="round" />
         </svg>
       </span>
-      <ul id="searchResults" class="search-results"></ul>
+      <ul id="searchResults" class="search-results" aria-label="Результаты поиска"></ul>
     </div>
 
     <nav class="page-nav">
-      <a href="#">Главное</a>
-      <a href="#">Все игры</a>
+      <a href="{% url 'index' %}">Главное</a>
+      <a href="{% url 'gamelist' %}">Все игры</a>
       <a href="#">Новости</a>
     </nav>
-  </div>
+  </section>
 
-  <!-- Основной баннер и боковая панель -->
-  <div class="main-container">
-    <div class="main-banner" id="mainBanner">
-      <img id="bannerImage" src="" alt="Banner" />
-      <div class="banner-text">
-        <h1 id="bannerTitle">Загрузка...</h1>
-        <p id="bannerDescription">Ожидайте...</p>
-        <button class="banner-btn">Играть бесплатно</button>
-      </div>
-      <div class="banner-progress"></div>
-    </div>
+  <!-- Баннер и боковая панель -->
+  <main class="main-container">
+    <section class="main-banner" id="mainBanner">
+      {% if banner_game %}
+        <img id="bannerImage" src="{{ banner_game.background_image }}" alt="{{ banner_game.name }}" />
+        <div class="banner-text">
+          <h1 id="bannerTitle">{{ banner_game.name }}</h1>
+          <p id="bannerDescription">.</p>
+          <button class="banner-btn">Подробнее</button>
+        </div>
+        <div class="banner-progress"></div>
+      {% else %}
+        <p>Нет игр для отображения.</p>
+      {% endif %}
+    </section>
 
-    <div class="sidebar" id="randomGames">
-      <span style="color:#aaa;">Загрузка игр...</span>
-    </div>
-  </div>
+    {% if random_games %}
+      <aside class="sidebar" id="randomGames">
+        {% for game in random_games %}
+          <div class="game-card" data-index="{{ forloop.counter0 }}">
+            <img src="{{ game.background_image }}" alt="{{ game.name }}" />
+            <span>{{ game.name }}</span>
+          </div>
+        {% endfor %}
+      </aside>
+    {% else %}
+      <p class="no-games-msg">Нет доступных игр для отображения.</p>
+    {% endif %}
+  </main>
 
-  <!-- Открыть новое -->
-  <div class="discover-more">
-    <a href="#" style="text-decoration: none;">
+  <!-- Секция "Откройте новое" -->
+  <section class="discover-more">
+    <a href="{% url 'gamelist' %}" class="discover-link">
       <h2>Откройте для себя что-то новое <span>›</span></h2>
     </a>
-  </div>
+  </section>
 
+  <!-- Данные об играх -->
+  {{ games_data|json_script:"games-data" }}
+
+  <!-- Скрипты -->
   <script src="{% static 'js/bannerslist.js' %}"></script>
 
 </body>

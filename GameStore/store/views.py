@@ -4,14 +4,36 @@ from django.contrib import messages
 from .services.rawg import get_games
 from django.http import JsonResponse
 from .forms import RegisterForm, LoginForm
+from .models import Game
+import random
+from django.db.models import Q
 
 User = get_user_model()
 
 # Create your views here.
 def index(request):
+    random_games = Game.objects.filter(background_image__isnull=False).order_by('?')[:7]
 
-    context = {'title': 'GameStore - Главная'}
-    
+    # Делаем баннер на основе первой игры (или какой-то другой логики)
+    banner_game = random_games[0] if random_games else None
+
+    # Сериализуем нужные данные
+    games_data = [
+        {
+            'name': game.name,
+            'released': str(game.released) if game.released else 'Без даты релиза',
+            'background_image': game.background_image
+        }
+        for game in random_games
+    ]
+
+    context = {
+        'title': 'GameStore - Главная',
+        'random_games': random_games,
+        'games_data': games_data,  # Добавляем сериализованные данные
+        'banner_game': banner_game,  # Передаем конкретную игру для баннера
+    }
+
     return render(request, 'store/index.html', context)
 
 def loginForm(request):
@@ -54,6 +76,14 @@ def regForm(request):
     context['form'] = form
     return render(request, 'store/reg.html', context)
 
-def game_list(request):
+def game_api(request):
     games = get_games()
     return JsonResponse(games, safe=False)
+
+def gamelist(request):
+     context = {
+         'title': 'GameStore - Игры'
+     }
+     
+     return render(request, 'store/games-list.html', context)
+

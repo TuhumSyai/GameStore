@@ -1,11 +1,13 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="games-list.css" />
+  <link rel="stylesheet" href="{% static 'css/games-list.css' %}" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <title>GameStore — Каталог игр</title>
+  <title>{{ title }}</title>
 </head>
 <body>
 
@@ -13,11 +15,11 @@
   <header class="header">
     <div class="header-left">
       <div class="logo-dropdown">
-        <img src="../icons/logo.png" alt="Logo" class="logo" />
+        <img src="{% static 'img/logo/logo.png' %}" alt="Логотип" class="logo" />
         <span class="arrow">▾</span>
         <div class="dropdown-menu">
-          <a href="index.html">Главная</a>
-          <a href="games-list.html">Каталог</a>
+          <a href="{% url 'index' %}">Главная</a>
+          <a href="{% url 'gamelist' %}">Каталог</a>
           <a href="#">О нас</a>
         </div>
       </div>
@@ -25,18 +27,10 @@
     </div>
     <nav class="header-nav">
       <a href="#">Поддержка</a>
-      <div class="dropdown">
-        <a href="#">Публикация ▾</a>
-        <div class="dropdown-content">
-          <a href="#">Unreal Engine</a>
-          <a href="#">Twinmotion</a>
-          <a href="#">MetaHuman</a>
-        </div>
-      </div>
     </nav>
     <div class="header-right">
-      <img src="../icons/language.png" alt="language" width="22" height="22">
-      <a href="login.html" class="login-btn">Войти</a>
+      <img src="{% static 'img/reg/language.png' %}" alt="Сменить язык" width="22" height="22">
+      <a href="{% url 'login' %}" class="login-btn">Войти</a>
       <button class="download-btn">Загрузить</button>
     </div>
   </header>
@@ -54,8 +48,8 @@
       </span>
     </div>
     <nav class="page-nav">
-      <a href="index.html" class="nav-link">Главное</a>
-      <a href="games-list.html" class="nav-link active">Все игры</a>
+      <a href="{% url 'index' %}" class="nav-link">Главное</a>
+      <a href="{% url 'gamelist' %}" class="nav-link active">Все игры</a>
       <a href="#">Новости</a>
     </nav>
   </div>
@@ -93,6 +87,6 @@
   </div>
   <!-- ======================================= -->
 
-  <script src="game-list.js"></script>
+  <script src="{% static 'js/game-list.js' %}"></script>
 </body>
 </html>
