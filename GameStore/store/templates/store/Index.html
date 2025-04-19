@@ -49,7 +49,11 @@
       <button class="download-btn">Загрузить</button>
     </div>
   </header>
-
+  {% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-warning">{{ message }}</div>
+  {% endfor %}
+{% endif %}
   <!-- Поиск и навигация -->
   <section class="search-section">
     <div class="search-bar">

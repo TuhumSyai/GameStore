@@ -429,3 +429,36 @@
 .reset-btn:hover {
   background: #2a2b2b;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 30px;
+  padding: 20px;
+}
+
+.page-link {
+  padding: 8px 12px;
+  border-radius: 6px;
+  background-color: #1e1e1e;
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+  border: 1px solid #333;
+}
+
+.page-link:hover {
+  background-color: #2a2a2e;
+}
+
+.page-link.active {
+  background-color: #3e3e3e;
+  color: white;
+  pointer-events: none;
+  font-weight: bold;
+  border-color: #3e3e3e;
+}
