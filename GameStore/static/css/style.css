@@ -27,6 +27,7 @@ body {
   position: relative;
 }
 
+
 .logo {
   height: 45px;
   cursor: pointer;
@@ -99,6 +100,11 @@ body {
   display: flex;
   align-items: center;
   gap: 15px;
+}
+
+.header-right a {
+  text-decoration: none;
+  color: #fff;
 }
 
 .lang-btn {
@@ -295,12 +301,24 @@ body {
 }
 
 .banner-progress {
-  height: 6px;
-  width: 100%;
-  background-color: #404044;
-  animation: bannerTimer 5s linear infinite;
-  position: relative;
-  z-index: 3;
+  height: 6px; /* высота бар */
+  width: 100%; /* ширина бар */
+  background-color: #e2e2e2; /* цвет фона */
+  border-radius: 0 0 10px 10px; /* скругленные углы */
+  position: absolute; /* фиксированное положение */
+  bottom: 0; /* помещаем на низ баннера */
+  left: 0;
+  z-index: 2; /* чтобы был поверх других элементов */
+  animation: bannerTimer 5s linear infinite; /* анимация прогресса */
+}
+
+@keyframes bannerTimer {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
 }
 
 .banner-btn {
@@ -382,6 +400,7 @@ body {
 .discover-more {
   max-width: 1200px;
   margin: 0 auto;
+  margin-left: 65px;
   padding: -10px 10px;
 }
 
