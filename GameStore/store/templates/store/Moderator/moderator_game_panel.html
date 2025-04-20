@@ -1,19 +1,28 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>{{ title }}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/moderator_game_panel.css' %}">
 </head>
 <body>
 <h1>{{ title }}</h1>
 
-<a href="{% url 'add_game' %}">➕ Добавить игру</a>
-<table border="1" cellpadding="8" cellspacing="0">
+<!-- Форма поиска -->
+<form method="get" class="search-form">
+    <input type="text" name="q" placeholder="Поиск по названию..." value="{{ request.GET.q }}">
+    <button type="submit">🔍 Найти</button>
+</form>
+
+<a class="add-button" href="{% url 'add_game' %}">➕ Добавить игру</a>
+
+<table class="game-table">
     <thead>
         <tr>
             <th>ID</th>
             <th>Название</th>
-            <th>Дата релиза</th>
+            <th>Дата релиса</th>
             <th>Рейтинг</th>
             <th>Действия</th>
         </tr>
@@ -25,15 +34,19 @@
             <td>{{ game.name }}</td>
             <td>{{ game.released }}</td>
             <td>{{ game.rating }}</td>
-            <td>
-                <a href="{% url 'edit_game' game.id %}">✏️ Редактировать</a> |
-                <a href="{% url 'delete_game' game.id %}">🗑️ Удалить</a>
+            <td class="actions">
+                <a class="edit" href="{% url 'edit_game' game.id %}">✏️ Редактировать</a>
+                <a class="delete" href="{% url 'delete_game' game.id %}">🗑️ Удалить</a>
             </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">Ничего не найдено.</td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
 
-<p><a href="/">← Назад на главную</a></p>
+<p><a class="back-link" href="/">← Назад на главную</a></p>
 </body>
 </html>

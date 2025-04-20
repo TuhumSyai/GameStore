@@ -9,6 +9,8 @@ from .services.rawg import get_games
 from .forms import RegisterForm, LoginForm, GameForm
 from .models import Game, Genre, CustomUser
 
+from django.db.models import Q
+
 import random
 
 User = get_user_model()
@@ -48,16 +50,22 @@ def is_admin(user):
     return user.is_authenticated and user.is_superuser
 
 
-# Панель управления модераторами
 @user_passes_test(is_admin)
 def moderator_panel(request):
-    users = CustomUser.objects.filter(is_superuser=False)
+    query = request.GET.get('q', '')
+    users = CustomUser.objects.filter()
+
+    if query:
+        users = users.filter(
+            Q(username__icontains=query) |
+            Q(email__icontains=query)
+        )
 
     if request.method == 'POST':
         user_id = request.POST.get('user_id')
         action = request.POST.get('action')
 
-        user = CustomUser.objects.get(id=user_id)
+        user = get_object_or_404(CustomUser, id=user_id)
         user.is_moderator = (action == 'grant')
         user.save()
 
@@ -78,7 +86,12 @@ def is_moderator(user):
 # Панель модерации игр
 @user_passes_test(is_moderator)
 def moderator_game_panel(request):
+    query = request.GET.get('q', '')
     games = Game.objects.all()
+
+    if query:
+        games = games.filter(name__icontains=query)
+
     context = {
         'title': 'Модерация игр',
         'games': games,
