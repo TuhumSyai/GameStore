@@ -230,3 +230,64 @@ button[type="submit"].active {
 .policy-link:hover {
   text-decoration: none;
 }
+
+@media (max-width: 768px) {
+  .login-container {
+    width: 90%;
+    padding: 30px 20px;
+  }
+
+  .logo {
+    height: 50px;
+  }
+
+  h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  input, input[type="date"] {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  button[type="submit"] {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .social {
+    height: 44px;
+    background-size: 50%;
+  }
+
+  .checkbox-policy {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-container {
+    padding: 20px 15px;
+    border-radius: 12px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  .divider span {
+    font-size: 13px;
+  }
+
+  .forgot-password,
+  .New-acc,
+  .policy {
+    font-size: 14px;
+  }
+
+  .social {
+    height: 42px;
+    background-size: 45%;
+  }
+}

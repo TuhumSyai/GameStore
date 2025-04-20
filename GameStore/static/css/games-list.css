@@ -462,3 +462,100 @@
   font-weight: bold;
   border-color: #3e3e3e;
 }
+
+@media (max-width: 1200px) {
+  .header-nav {
+    margin-right: 400px;
+  }
+
+  .catalog-container {
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 992px) {
+  .header-nav {
+    display: none; /* прячем навигацию */
+  }
+
+  .search-section {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 0;
+  }
+
+  .catalog-container {
+    flex-direction: column;
+    padding: 0 16px;
+  }
+
+  .catalog-filters {
+    width: 100%;
+    margin-bottom: 24px;
+  }
+
+  .games-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .header-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .search-section {
+    gap: 12px;
+  }
+
+  .games-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+}
+
+@media (max-width: 576px) {
+  .header {
+    padding: 16px;
+  }
+
+  .store-name {
+    font-size: 16px;
+  }
+
+  .search-bar input {
+    width: 100%;
+  }
+
+  .games-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  }
+
+  .download-btn,
+  .login-btn {
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+
+  .lang-btn {
+    font-size: 14px;
+  }
+
+  .catalog-filters h3 {
+    font-size: 16px;
+  }
+
+  .catalog-card .info h4 {
+    font-size: 13px;
+  }
+
+  .catalog-card .info p {
+    font-size: 11px;
+  }
+}

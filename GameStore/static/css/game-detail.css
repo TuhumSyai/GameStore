@@ -1,0 +1,352 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  body {
+    background-color: #101014;
+    color: white;
+  }
+  
+  /* ========== HEADER ========== */
+  
+  .header {
+    background-color: #121216;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 24px;
+  }
+  
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  
+  .logo {
+    height: 45px;
+    cursor: pointer;
+  }
+  
+  .logo-dropdown {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  .logo-dropdown:hover .dropdown-menu {
+    display: flex;
+  }
+  
+  .dropdown-menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 36px;
+    left: 0;
+    background-color: #1a1a1a;
+    border-radius: 4px;
+    padding: 8px;
+    min-width: 120px;
+    z-index: 10;
+  }
+  
+  .dropdown-menu a {
+    color: white;
+    text-decoration: none;
+    padding: 6px 8px;
+    border-radius: 4px;
+  }
+  
+  .dropdown-menu a:hover {
+    background-color: #333;
+  }
+  
+  .store-name {
+    font-weight: 700;
+    font-size: 18px;
+    color: white;
+    letter-spacing: 1px;
+  }
+  
+  .header-nav {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    margin-right: 760px;
+  }
+  
+  .header-nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 450;
+  }
+  
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .lang-btn,
+  .login-btn,
+  .download-btn {
+    font-size: 15px;
+    cursor: pointer;
+    border: none;
+  }
+  
+  .lang-btn {
+    background: none;
+    color: white;
+  }
+  
+  .login-btn {
+    background-color: #2a2a2e;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 12px;
+    text-decoration: none;
+  }
+  
+  .download-btn {
+    background-color: #29a8ff;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 12px;
+    font-weight: 700;
+  }
+  
+  /* ========== GAME DETAIL PAGE ========== */
+  
+  .game-detail-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .game-banner {
+    display: flex;
+    flex-direction: column;
+    background-color: #101014;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+    margin-bottom: 3rem;
+  }
+  
+  .game-banner-image {
+    width: 100%;
+    max-height: 600px;
+    object-fit: cover;
+    border-radius: 16px;
+    margin-bottom: 2rem;
+  }
+  
+  /* Content layout */
+  
+  .game-content {
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+  
+  .game-main-info {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .game-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #fff;
+  }
+  
+  .game-release {
+    font-size: 1rem;
+    color: #aaa;
+  }
+  
+  .game-description {
+    font-size: 1.05rem;
+    color: #ddd;
+    line-height: 1.6;
+  }
+  
+  .game-stores {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .store-link {
+    background-color: #0078f2;
+    padding: 0.8rem 1.6rem;
+    border-radius: 12px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.3s ease;
+  }
+  
+  .store-link:hover {
+    background-color: #005dc1;
+  }
+  
+  /* Sidebar */
+  
+  .game-sidebar {
+    flex: 1;
+    background-color: #101014;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+    padding: 1.5rem;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    min-width: 260px;
+    max-width: 400px;
+  }
+  
+  .sidebar-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .sidebar-section h3 {
+    font-size: 1rem;
+    color: #ccc;
+    margin-bottom: 0.2rem;
+  }
+  
+  .game-rating {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #ffffff;
+  }
+  
+  .game-genres,
+  .game-platforms {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  
+  .badge,
+  .platform {
+    background-color: #2f2f2f;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: #e4e4e4;
+  }
+  
+  /* ========== RESPONSIVE ========== */
+  
+  @media (max-width: 992px) {
+    .game-content {
+      flex-direction: column;
+    }
+  
+    .game-sidebar {
+      width: 100%;
+    }
+  
+    .game-title {
+      font-size: 2.2rem;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .store-link {
+      width: 100%;
+      text-align: center;
+    }
+  
+    .game-banner-image {
+      height: auto;
+      object-fit: contain;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+  
+    .header-nav {
+      margin-right: 0;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+  
+    .header-right {
+      width: 100%;
+      justify-content: flex-end;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .header {
+      padding: 20px;
+    }
+  
+    .logo {
+      height: 36px;
+    }
+  
+    .store-name {
+      font-size: 16px;
+    }
+  
+    .header-nav {
+      gap: 12px;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .lang-btn,
+    .login-btn,
+    .download-btn {
+      font-size: 13px;
+      padding: 8px 12px;
+    }
+  
+    .download-btn {
+      width: 100%;
+      text-align: center;
+    }
+  
+    .game-title {
+      font-size: 1.8rem;
+    }
+  
+    .game-description {
+      font-size: 0.95rem;
+    }
+  
+    .sidebar-section h3 {
+      font-size: 0.9rem;
+    }
+  
+    .game-rating {
+      font-size: 1rem;
+    }
+  
+    .badge,
+    .platform {
+      font-size: 0.75rem;
+      padding: 0.3rem 0.6rem;
+    }
+  }
+  

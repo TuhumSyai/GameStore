@@ -257,20 +257,22 @@ body {
 
 /* ------------- MAIN BANNER ------------- */
 
+/* ------------- MAIN BANNER ------------- */
+
 .main-container {
   display: flex;
   background-color: #1a1a1a;
   border-radius: 22px;
   overflow: hidden;
-  max-width: 1400px; /* увеличено для более широкого баннера */
+  max-width: 1400px;
   margin: 40px auto;
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
 }
 
 .main-banner {
-  flex: 4; /* увеличено, чтобы баннер был шире */
+  flex: 4;
   position: relative;
-  min-height: 400px; /* увеличена высота баннера */
+  min-height: 400px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -301,10 +303,32 @@ body {
   z-index: 3;
 }
 
+.banner-btn {
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+.banner-btn:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.banner-btn:active {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
 /* -------- SIDEBAR RANDOM GAMES -------- */
 
 .sidebar {
-  flex: 2; /* увеличено, чтобы боковой баннер был шире */
+  flex: 2;
   padding: 20px;
   background-color: #101014;
   display: flex;
@@ -313,22 +337,19 @@ body {
 }
 
 .game-card {
-  display: flex;
-  align-items: center;
+  display: inline-flex; /* изменено на inline-flex для выравнивания по горизонтали */
+  align-items: center; /* выравнивание по вертикали */
   gap: 12px;
   padding: 6px;
   border-radius: 6px;
   cursor: pointer;
   transition: transform 0.2s ease;
-}
-
-.game-card:hover {
-  transform: scale(1.03);
-  background-color: #ffffff12;
+  text-decoration: none;
+  color: white;
 }
 
 .game-card img {
-  width: 50px; /* увеличено изображение игры */
+  width: 50px; /* увеличено изображение */
   height: 50px;
   object-fit: cover;
   border-radius: 6px;
@@ -340,12 +361,33 @@ body {
   word-break: break-word;
 }
 
+.game-card:hover {
+  transform: scale(1.03);
+  background-color: #ffffff12;
+}
+
+.game-card a {
+  color: inherit; /* наследует цвет от родителя */
+  text-decoration: none; /* убирает подчеркивание */
+}
+
+.game-card a:hover {
+  color: #29a8ff; /* синий цвет при наведении */
+}
+
+
+
 /* -------- DISCOVER MORE -------- */
 
 .discover-more {
   max-width: 1200px;
   margin: 0 auto;
   padding: -10px 10px;
+}
+
+.discover-more a {
+  color: white;
+  text-decoration: none;
 }
 
 .discover-more h2 {
@@ -362,6 +404,12 @@ body {
   font-weight: 400;
   margin-right: 850px;
 }
+
+.discover-more a:hover {
+  color: #29a8ff;
+}
+
+
 
 
 .banner-btn {
@@ -385,3 +433,127 @@ body {
   background-color: rgba(255, 255, 255, 0.2); /* чуть темнее при нажатии */
   border-color: rgba(255, 255, 255, 0.4);
 }
+
+@media (max-width: 1200px) {
+  .header-nav {
+    margin-right: 400px;
+    gap: 20px;
+  }
+
+  .discover-more h2 span {
+    margin-right: 400px;
+  }
+}
+
+@media (max-width: 992px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .header-nav {
+    margin-right: 0;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .search-section {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 20px;
+  }
+
+  .main-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    order: -1;
+    width: 100%;
+  }
+
+  .discover-more h2 span {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-right {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .search-bar input {
+    width: 100%;
+  }
+
+  .main-banner {
+    min-height: 300px;
+  }
+
+  .game-card span {
+    font-size: 14px;
+  }
+
+  .game-card img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .discover-more h2 span {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .header-left,
+  .header-right {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .logo {
+    height: 40px;
+  }
+
+  .store-name {
+    font-size: 16px;
+  }
+
+  .header-nav {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .main-container {
+    margin: 20px;
+  }
+
+  .main-banner {
+    min-height: 250px;
+  }
+
+  .banner-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .discover-more h2 {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .discover-more h2 span {
+    font-size: 18px;
+    margin-right: 0;
+  }
+
+  .search-bar input {
+    width: 100%;
+  }
+}
+

@@ -15,45 +15,15 @@
 <body>
 
   <!-- Шапка сайта -->
-  <header class="header">
-    <div class="header-left">
-      <div class="logo-dropdown">
-        <img src="{% static 'img/logo/logo.png' %}" alt="Логотип" class="logo" />
-        <span class="arrow">▾</span>
-        <nav class="dropdown-menu">
-          <a href="{% url 'index' %}">Главная</a>
-          <a href="{% url 'gamelist' %}">Каталог</a>
-          <a href="#">О нас</a>
-        </nav>
-      </div>
-      <span class="store-name">STORE</span>
-    </div>
+  {% include 'store/base-header.html' %}
+  <!-- ---------------------- -->
 
-    <nav class="header-nav">
-      <a href="#">Поддержка</a>
-    </nav>
-
-    <div class="header-right">
-      <img src="{% static 'img/reg/language.png' %}" alt="Сменить язык" width="22" height="22" />
-
-      {% if user.is_authenticated %}
-        <p class="welcome-text">Привет, {{ user.username }}!</p>
-        <form method="post" action="{% url 'logout' %}" class="logout-form">
-          {% csrf_token %}
-          <button type="submit" class="login-btn">Выйти</button>
-        </form>
-      {% else %}
-        <a href="{% url 'login' %}" class="login-btn">Войти</a>
-      {% endif %}
-
-      <button class="download-btn">Загрузить</button>
-    </div>
-  </header>
   {% if messages %}
   {% for message in messages %}
     <div class="alert alert-warning">{{ message }}</div>
   {% endfor %}
-{% endif %}
+  {% endif %}
+  
   <!-- Поиск и навигация -->
   <section class="search-section">
     <div class="search-bar">
@@ -94,8 +64,10 @@
       <aside class="sidebar" id="randomGames">
         {% for game in random_games %}
           <div class="game-card" data-index="{{ forloop.counter0 }}">
-            <img src="{{ game.background_image }}" alt="{{ game.name }}" />
-            <span>{{ game.name }}</span>
+            <a href="{% url 'game_detail' game.id %}">
+              <img src="{{ game.background_image }}" alt="{{ game.name }}" />
+              <span>{{ game.name }}</span>
+            </a>
           </div>
         {% endfor %}
       </aside>

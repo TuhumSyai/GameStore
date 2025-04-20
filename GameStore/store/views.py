@@ -8,6 +8,7 @@ from .models import Game, Genre
 import random
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import get_object_or_404
 
 User = get_user_model()
 
@@ -123,3 +124,12 @@ def gamelist(request):
 
     return render(request, 'store/games-list.html', context)
 
+def game_detail(request, game_id):
+    game = get_object_or_404(Game, id=game_id)
+
+    context = {
+        'title': f"GameStore - {game.name}",
+        'game': game
+    }
+
+    return render(request, 'store/game-detail.html', context)

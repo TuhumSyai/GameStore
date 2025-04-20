@@ -14,38 +14,8 @@
 <body>
 
   <!-- ========== HEADER ========== -->
-  <header class="header">
-    <div class="header-left">
-      <div class="logo-dropdown">
-        <img src="{% static 'img/logo/logo.png' %}" alt="Логотип" class="logo" />
-        <span class="arrow">▾</span>
-        <div class="dropdown-menu">
-          <a href="{% url 'index' %}">Главная</a>
-          <a href="{% url 'gamelist' %}">Каталог</a>
-          <a href="#">О нас</a>
-        </div>
-      </div>
-      <span class="store-name">STORE</span>
-    </div>
-
-    <nav class="header-nav">
-      <a href="#">Поддержка</a>
-    </nav>
-
-    <div class="header-right">
-      <img src="{% static 'img/reg/language.png' %}" alt="Сменить язык" width="22" height="22">
-      {% if user.is_authenticated %}
-        <p class="welcome-text">Привет, {{ user.username }}!</p>
-        <form method="post" action="{% url 'logout' %}" class="logout-form">
-          {% csrf_token %}
-          <button type="submit" class="login-btn">Выйти</button>
-        </form>
-      {% else %}
-        <a href="{% url 'login' %}" class="login-btn">Войти</a>
-      {% endif %}
-      <button class="download-btn">Загрузить</button>
-    </div>
-  </header>
+  {% include 'store/base-header.html' %}
+  
   <!-- ============================= -->
   {% if messages %}
   {% for message in messages %}
@@ -107,14 +77,14 @@
 
     <section id="gamesGrid" class="games-grid">
       {% for game in games %}
-        <div class="catalog-card">
-          <img src="{{ game.background_image }}" alt="{{ game.name }}">
-          <div class="info">
-            <h4>{{ game.name }}</h4>
-            <p>Релиз: {{ game.released }}</p>
-            <p>Рейтинг: {{ game.rating }}</p>
-          </div>
+      <a href="{% url 'game_detail' game.id %}" class="catalog-card">
+        <img src="{{ game.background_image }}" alt="{{ game.name }}">
+        <div class="info">
+          <h4>{{ game.name }}</h4>
+          <p>Релиз: {{ game.released }}</p>
+          <p>Рейтинг: {{ game.rating }}</p>
         </div>
+      </a>
       {% endfor %}
     </section>
 
