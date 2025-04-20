@@ -4,6 +4,8 @@ const bannerDesc = document.getElementById('bannerDescription');
 const bannerProgress = document.querySelector('.banner-progress');
 const games = JSON.parse(document.getElementById('games-data').textContent);
 const gameCards = document.querySelectorAll('.game-card');
+const bannerDetailBtn = document.getElementById('bannerDetailBtn');
+
 
 let currentBannerIndex = 0;
 let bannerInterval;
@@ -15,6 +17,8 @@ function updateBanner(index) {
   bannerImage.src = game.background_image || '/static/img/default_banner.jpg';
   bannerTitle.textContent = game.name;
   bannerDesc.textContent = '\u200B';
+
+  bannerDetailBtn.href = `/games/${game.id}/`;
 }
 
 function restartProgressAnimation() {

@@ -23,6 +23,7 @@ def index(request):
 
     games_data = [
         {
+            'id': game.id,
             'name': game.name,
             'released': str(game.released) if game.released else 'Без даты релиза',
             'background_image': game.background_image
