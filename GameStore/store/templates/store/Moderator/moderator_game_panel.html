@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+<h1>{{ title }}</h1>
+
+<a href="{% url 'add_game' %}">➕ Добавить игру</a>
+<table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Название</th>
+            <th>Дата релиза</th>
+            <th>Рейтинг</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for game in games %}
+        <tr>
+            <td>{{ game.id }}</td>
+            <td>{{ game.name }}</td>
+            <td>{{ game.released }}</td>
+            <td>{{ game.rating }}</td>
+            <td>
+                <a href="{% url 'edit_game' game.id %}">✏️ Редактировать</a> |
+                <a href="{% url 'delete_game' game.id %}">🗑️ Удалить</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<p><a href="/">← Назад на главную</a></p>
+</body>
+</html>

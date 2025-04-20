@@ -1,18 +1,20 @@
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse, HttpResponse
 from django.contrib.auth import get_user_model, login, authenticate
-from django.contrib import messages
-from .services.rawg import get_games
-from django.http import JsonResponse
-from .forms import RegisterForm, LoginForm
-from .models import Game, Genre
-import random
-from django.db.models import Q
+from django.contrib.auth.decorators import user_passes_test
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import get_object_or_404
+from django.contrib import messages
+
+from .services.rawg import get_games
+from .forms import RegisterForm, LoginForm, GameForm
+from .models import Game, Genre, CustomUser
+
+import random
 
 User = get_user_model()
 
-# Create your views here.
+
+# Главная страница
 def index(request):
     random_games = Game.objects.filter(background_image__isnull=False).order_by('?')[:7]
 
@@ -40,27 +42,127 @@ def index(request):
 
     return render(request, 'store/index.html', context)
 
-def loginForm(request):
-    form = LoginForm(request.POST or None)
-    
-    if request.method == 'POST':
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(request, username=username, password=password)
 
-            if user is not None:
-                login(request, user)
-                return redirect('/')
-            else:
-                messages.error(request, 'Неверный логин или пароль')
+# Проверка на администратора
+def is_admin(user):
+    return user.is_authenticated and user.is_superuser
+
+
+# Панель управления модераторами
+@user_passes_test(is_admin)
+def moderator_panel(request):
+    users = CustomUser.objects.filter(is_superuser=False)
+
+    if request.method == 'POST':
+        user_id = request.POST.get('user_id')
+        action = request.POST.get('action')
+
+        user = CustomUser.objects.get(id=user_id)
+        user.is_moderator = (action == 'grant')
+        user.save()
+
+        return redirect('moderator_panel')
 
     context = {
+        'title': 'Управление модераторами',
+        'users': users,
+    }
+    return render(request, 'store/Moderator/moderator_panel.html', context)
+
+
+# Проверка на модератора или администратора
+def is_moderator(user):
+    return user.is_authenticated and (user.is_moderator or user.is_superuser)
+
+
+# Панель модерации игр
+@user_passes_test(is_moderator)
+def moderator_game_panel(request):
+    games = Game.objects.all()
+    context = {
+        'title': 'Модерация игр',
+        'games': games,
+    }
+    return render(request, 'store/Moderator/moderator_game_panel.html', context)
+
+
+# Редактирование игры
+@user_passes_test(is_moderator)
+def edit_game(request, game_id):
+    game = get_object_or_404(Game, id=game_id)
+
+    if request.method == 'POST':
+        form = GameForm(request.POST, instance=game)
+        if form.is_valid():
+            form.save()
+            return redirect('moderator_game_panel')
+    else:
+        form = GameForm(instance=game)
+
+    context = {
+        'title': 'Редактирование игры',
         'form': form,
-        'title': 'GameStore - Авторизация'
+    }
+    return render(request, 'store/Moderator/edit_game.html', context)
+
+
+# Удаление игры
+@user_passes_test(is_moderator)
+def delete_game(request, game_id):
+    game = get_object_or_404(Game, id=game_id)
+
+    if request.method == 'POST':
+        game.delete()
+        return redirect('moderator_game_panel')
+
+    context = {
+        'title': 'Удаление игры',
+        'game': game,
+    }
+    return render(request, 'store/Moderator/delete_game.html', context)
+
+
+# Добавление игры вручную
+@user_passes_test(is_moderator)
+def add_game(request):
+    if request.method == 'POST':
+        form = GameForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('moderator_game_panel')
+    else:
+        form = GameForm()
+
+    context = {
+        'title': 'Добавить игру',
+        'form': form,
+    }
+    return render(request, 'store/Moderator/add_game.html', context)
+
+
+# Авторизация пользователя
+def loginForm(request):
+    form = LoginForm(request.POST or None)
+
+    if request.method == 'POST' and form.is_valid():
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password')
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('/')
+        else:
+            messages.error(request, 'Неверный логин или пароль')
+
+    context = {
+        'title': 'GameStore - Авторизация',
+        'form': form,
     }
     return render(request, 'store/login.html', context)
 
+
+# Регистрация пользователя
 def regForm(request):
     context = {'title': 'GameStore - Регистрация'}
 
@@ -68,22 +170,25 @@ def regForm(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.set_password(form.cleaned_data['password'])  # хэшируем пароль
+            user.set_password(form.cleaned_data['password'])
             user.save()
-            login(request, user)  # логиним пользователя
+            login(request, user)
             return redirect('/')
         else:
             context['form'] = form
             return render(request, 'store/reg.html', context)
 
-    form = RegisterForm()
-    context['form'] = form
+    context['form'] = RegisterForm()
     return render(request, 'store/reg.html', context)
 
+
+# Получение игр через RAWG API
 def game_api(request):
     games = get_games()
     return JsonResponse(games, safe=False)
 
+
+# Список игр с фильтрацией и сортировкой
 def gamelist(request):
     sort_option = request.GET.get('sort', 'added')
     selected_genres = request.GET.getlist('genres')
@@ -104,7 +209,6 @@ def gamelist(request):
     elif sort_option == '-metacritic':
         games = games.order_by('-rating')
 
-    # Пагинация: 12 игр на страницу
     paginator = Paginator(games, 15)
     try:
         games_page = paginator.page(page)
@@ -115,7 +219,7 @@ def gamelist(request):
 
     context = {
         'title': 'GameStore - Игры',
-        'games': games_page,  # это page-объект
+        'games': games_page,
         'genres': Genre.objects.all(),
         'selected_genres': list(map(int, selected_genres)),
         'sort_option': sort_option,
@@ -125,12 +229,13 @@ def gamelist(request):
 
     return render(request, 'store/games-list.html', context)
 
+
+# Детальная страница игры
 def game_detail(request, game_id):
     game = get_object_or_404(Game, id=game_id)
 
     context = {
         'title': f"GameStore - {game.name}",
-        'game': game
+        'game': game,
     }
-
     return render(request, 'store/game-detail.html', context)

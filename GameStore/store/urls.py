@@ -27,4 +27,9 @@ urlpatterns = [
     path('game-api/', views.game_api, name="game_api"),
     path('games-list/', views.gamelist, name="gamelist"),
     path('games/<int:game_id>/', views.game_detail, name='game_detail'),
+    path('moderators/', views.moderator_panel, name='moderator_panel'),
+    path('moderator/games/', views.moderator_game_panel, name='moderator_game_panel'),
+    path('moderator/games/add/', views.add_game, name='add_game'),
+    path('moderator/games/<int:game_id>/edit/', views.edit_game, name='edit_game'),
+    path('moderator/games/<int:game_id>/delete/', views.delete_game, name='delete_game'),
 ]

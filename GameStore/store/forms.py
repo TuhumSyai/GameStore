@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
+from .models import Game
 import datetime
 
 User = get_user_model()
@@ -79,3 +80,13 @@ class LoginForm(forms.Form):
             'autocomplete': 'current-password',
         })
     )
+
+class GameForm(forms.ModelForm):
+    class Meta:
+        model = Game
+        fields = ['name', 'description', 'released', 'rating', 'rawg_id', 'background_image', 'genres', 'platforms', 'stores']
+        widgets = {
+            'genres': forms.CheckboxSelectMultiple,
+            'platforms': forms.CheckboxSelectMultiple,
+            'stores': forms.CheckboxSelectMultiple,
+        }

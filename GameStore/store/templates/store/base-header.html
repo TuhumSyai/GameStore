@@ -24,6 +24,12 @@
 
     {% if user.is_authenticated %}
       <p class="welcome-text">{{ user.username }}</p>
+      {% if user.is_superuser %}
+        <a href="{% url 'moderator_panel' %}">Панель модераторов</a>
+      {% endif %}
+      {% if user.is_moderator or user.is_superuser %}
+        <a href="{% url 'moderator_game_panel' %}">Панель игр</a>
+      {% endif %}
       <form method="post" action="{% url 'logout' %}" class="logout-form">
         {% csrf_token %}
         <button type="submit" class="login-btn">Выйти</button>
