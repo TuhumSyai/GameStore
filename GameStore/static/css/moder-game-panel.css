@@ -1,0 +1,96 @@
+/* Общий стиль для body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f6f8fa;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+/* Заголовки */
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Стилизация формы */
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+}
+
+/* Элементы формы, обернутые в <p> */
+form p {
+    margin-bottom: 15px;
+}
+
+/* Метки */
+form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+/* Текстовые поля, даты и т.п. */
+form input[type="text"],
+form input[type="date"],
+form input[type="number"],
+form input[type="url"],
+form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+/* Стилизация чекбоксов */
+form .checkboxselectmultiple {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-top: 5px;
+}
+
+form .checkboxselectmultiple label {
+    display: flex;
+    align-items: center;
+    background-color: #f0f0f0;
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+form .checkboxselectmultiple input {
+    margin-right: 8px;
+}
+
+/* Кнопка отправки */
+form button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+form button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Ссылка "Назад" */
+a {
+    display: inline-block;
+    margin-top: 20px;
+    text-decoration: none;
+    color: #007bff;
+}
+
+a:hover {
+    text-decoration: underline;
+}
