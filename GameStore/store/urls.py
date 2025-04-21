@@ -14,9 +14,19 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.urls import path
+from django.urls import path, include
 from django.contrib.auth.views import LogoutView
 from . import views
+
+from rest_framework.routers import DefaultRouter
+
+
+router = DefaultRouter()
+router.register(r'games', views.GameViewSet)
+router.register(r'genres', views.GenreViewSet)
+router.register(r'platforms', views.PlatformViewSet)
+router.register(r'stores', views.StoreViewSet)
+router.register(r'users', views.UserViewSet)
 
 
 urlpatterns = [
@@ -32,4 +42,5 @@ urlpatterns = [
     path('moderator/games/add/', views.add_game, name='add_game'),
     path('moderator/games/<int:game_id>/edit/', views.edit_game, name='edit_game'),
     path('moderator/games/<int:game_id>/delete/', views.delete_game, name='delete_game'),
+    path('api/', include(router.urls)),
 ]

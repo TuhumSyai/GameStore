@@ -5,9 +5,15 @@ from django.contrib.auth.decorators import user_passes_test
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 
+from rest_framework import viewsets
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
 from .services.rawg import get_games
 from .forms import RegisterForm, LoginForm, GameForm
-from .models import Game, Genre, CustomUser
+from .models import Game, Genre, Platform, Store, CustomUser
+
+from .serializers import GameSerializer, GenreSerializer, PlatformSerializer, StoreSerializer, UserSerializer
 
 from django.db.models import Q
 
@@ -252,3 +258,30 @@ def game_detail(request, game_id):
         'game': game,
     }
     return render(request, 'store/game-detail.html', context)
+
+
+
+# API view for Game
+class GameViewSet(viewsets.ModelViewSet):
+    queryset = Game.objects.all()
+    serializer_class = GameSerializer
+
+# API view for Genre
+class GenreViewSet(viewsets.ModelViewSet):
+    queryset = Genre.objects.all()
+    serializer_class = GenreSerializer
+
+# API view for Platform
+class PlatformViewSet(viewsets.ModelViewSet):
+    queryset = Platform.objects.all()
+    serializer_class = PlatformSerializer
+
+# API view for Store
+class StoreViewSet(viewsets.ModelViewSet):
+    queryset = Store.objects.all()
+    serializer_class = StoreSerializer
+
+# API view for User
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSerializer

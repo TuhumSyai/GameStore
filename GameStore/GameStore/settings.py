@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'rest_framework',
+
     'store',
 ]
 
@@ -150,4 +152,15 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'store.services.tasks.update_games',  # путь к задаче
         'schedule': crontab(minute=0, hour=0),  # Каждые 24 часа в полночь
     },
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+    'PAGE_SIZE': 10,  # Set default page size for pagination
 }
