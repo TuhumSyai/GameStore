@@ -1,0 +1,215 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #101014;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+  
+.create-container {
+  background-color: #18181c;
+  padding: 40px;
+  border-radius: 27px;
+  width: 460px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch; /* вместо center */
+  text-align: left;
+  border: 1px solid #444;
+}
+
+.sub {
+  text-align: center;
+}
+
+.logo {
+  height: 80px; /* Было 60px – сделаем чуть меньше */
+  max-width: 120px; /* Ограничим ширину */
+  margin-bottom: 10px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+h2 {
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-size: 15px;
+  color: #adadaf;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  font-weight: 600;
+  font-size: 17px;
+}
+
+
+
+.birth-block {
+  width: 100%;
+  text-align: left;
+}
+
+.birth-block label {
+  font-size: 14px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.select-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.select-row select {
+  flex: 1;
+  background-color: #1e1e22;
+  color: white;
+  border: 1px solid #444;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 14px;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 15px;
+  background-color: #2f2f33;
+  color: #888;
+  margin-bottom: 20px;
+  cursor: not-allowed;
+}
+
+.bottom-text {
+  font-size: 16px;
+  color: #adadaf;
+  margin-bottom: 10px;
+  padding-top: 15px;
+  text-align: center;
+}
+
+.bottom-text a {
+  color: #25b1f2;
+  font: 1.1em sans-serif;
+}
+
+.policy {
+  font-size: 15px;
+  color: #25b1f2;
+  padding-top: 15px;
+  text-align: center;
+}
+
+
+.dob-selects {
+  display: flex;
+  gap: 10px;
+  margin: 16px 0;
+  width: 100%; /* ✅ чтобы селекты тянулись до краёв текста */
+}
+
+
+select {
+  background-color: #1e1e22;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 12px;
+  padding: 15px;
+  padding-right: 50px;
+  font-size: 15px;
+  flex: 1;
+  appearance: none;
+}
+
+select:focus {
+  outline: none;
+  border-color: #666;
+}
+
+button:disabled {
+  background-color: #2f2f33;
+  color: white;
+  cursor: not-allowed;
+}
+
+button.active {
+  background-color: #25b1f2;
+  color: black;
+  cursor: pointer;
+}
+
+.continue-btn {
+  width: 100%;
+  max-width: 450px; /* или 400px, как визуально ближе */
+  height: 48px;
+  background-color: #29a8ff;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 15px;
+}
+
+.continue-btn:disabled {
+  background-color: #2f2f33;
+  cursor: not-allowed;
+}
+
+.birth {
+  text-align: left;
+  color: #888;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.form-wrapper {
+  width: 100%;
+  max-width: 450px; /* было 360px */
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin: 0 auto;
+}
+
+input[type="number"] {
+  background-color: #1e1e22;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 12px;
+  padding: 15px;
+  padding-right: 50px;
+  font-size: 15px;
+  flex: 1;
+  appearance: none;
+  -moz-appearance: textfield;
+}
+
+input[type="number"]:focus {
+  outline: none;
+  border-color: #666;
+}
+
+/* Убираем стрелки в Chrome */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input::placeholder {
+  color: white;
+  opacity: 1; /* чтобы не был полупрозрачным */
+}

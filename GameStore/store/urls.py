@@ -14,11 +14,33 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.urls import path
+from django.urls import path, include
+from django.contrib.auth.views import LogoutView
 from . import views
+
+from rest_framework.routers import DefaultRouter
+
+
+router = DefaultRouter()
+router.register(r'games', views.GameViewSet)
+router.register(r'genres', views.GenreViewSet)
+router.register(r'platforms', views.PlatformViewSet)
+router.register(r'stores', views.StoreViewSet)
+router.register(r'users', views.UserViewSet)
 
 
 urlpatterns = [
     path('', views.index, name="index"),
-    path('game-list/', views.game_list, name="game_list")
+    path('login/', views.loginForm, name="login"),
+    path('registration/', views.regForm, name="reg"),
+    path('logout/', LogoutView.as_view(next_page='index'), name='logout'),
+    path('game-api/', views.game_api, name="game_api"),
+    path('games-list/', views.gamelist, name="gamelist"),
+    path('games/<int:game_id>/', views.game_detail, name='game_detail'),
+    path('moderators/', views.moderator_panel, name='moderator_panel'),
+    path('moderator/games/', views.moderator_game_panel, name='moderator_game_panel'),
+    path('moderator/games/add/', views.add_game, name='add_game'),
+    path('moderator/games/<int:game_id>/edit/', views.edit_game, name='edit_game'),
+    path('moderator/games/<int:game_id>/delete/', views.delete_game, name='delete_game'),
+    path('api/', include(router.urls)),
 ]

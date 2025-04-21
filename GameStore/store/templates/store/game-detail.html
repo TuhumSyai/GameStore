@@ -1,0 +1,73 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ title }}</title>
+
+  <link rel="stylesheet" href="{% static 'css/game-detail.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/header.css' %}" />
+  <link rel="icon" href="{% static 'img/logo/logo.ico' %}" type="image/x-icon" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+
+</head>
+<body>
+
+<!-- Шапка сайта -->
+{% include 'store/base-header.html' %}
+<!-- --------------------------------- -->
+  {% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-warning">{{ message }}</div>
+  {% endfor %}
+  {% endif %}
+
+  <main class="game-detail-container">
+    <section class="game-banner">
+      <img src="{{ game.background_image }}" alt="{{ game.name }}" class="game-banner-image" />
+    </section>
+  
+    <section class="game-content">
+      <div class="game-main-info">
+        <h1 class="game-title">{{ game.name }}</h1>
+        <p class="game-release">Дата выхода: {{ game.released }}</p>
+  
+        <div class="game-description">
+          <p>{{ game.description }}</p>
+        </div>
+  
+        <div class="game-stores">
+          {% for store in game.stores.all %}
+            <a href="{{ store.domain }}" target="_blank" class="store-link">{{ store.name }}</a>
+          {% endfor %}
+        </div>
+      </div>
+  
+      <aside class="game-sidebar">
+        <p class="game-rating">⭐ {{ game.rating }}</p>
+  
+        <div class="sidebar-section">
+          <h3>Жанры</h3>
+          <div class="game-genres">
+            {% for genre in game.genres.all %}
+              <span class="badge">{{ genre.name }}</span>
+            {% endfor %}
+          </div>
+        </div>
+  
+        <div class="sidebar-section">
+          <h3>Платформы</h3>
+          <div class="game-platforms">
+            {% for platform in game.platforms.all %}
+              <span class="platform">{{ platform.name }}</span>
+            {% endfor %}
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+</body>
+</html>

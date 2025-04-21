@@ -1,0 +1,28 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}{{ title }}{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/login.css' %}" />
+  <link rel="icon" href="{% static 'img/logo/logo.ico' %}" type="image/x-icon" />
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+  <div class="login-container">
+    <!-- Логотип, ведущий на главную страницу -->
+    <a href="{% url 'index' %}"><img src="{% static 'img/logo/logo.png' %}" alt="Logo" class="logo" /></a>
+    
+    <!-- Основной контент страницы (форма входа или регистрации) -->
+    {% block content %}{% endblock %}
+    
+    <!-- Дополнительные ссылки, такие как политика конфиденциальности или создание аккаунта -->
+    {% block extra_links %}{% endblock %}
+  </div>
+
+  <!-- Скрипты -->
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

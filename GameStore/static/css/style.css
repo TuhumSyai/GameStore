@@ -10,6 +10,7 @@ body {
   color: white;
 }
 
+<<<<<<< HEAD
 /* ---------------- HEADER ----------------- */
 
 .header {
@@ -160,6 +161,8 @@ body {
   font-size: 15px;
   cursor: pointer;
 }
+=======
+>>>>>>> 6b89dd9e212921f5c7d4c7ce8e0091574fc9a752
 
 /* ------------- SEARCH SECTION ------------- */
 
@@ -191,8 +194,12 @@ body {
 }
 
 .search-bar input:hover,
+<<<<<<< HEAD
 .search-bar input:focus,
 .search-bar input:not(:placeholder-shown) {
+=======
+.search-bar input:focus {
+>>>>>>> 6b89dd9e212921f5c7d4c7ce8e0091574fc9a752
   background-color: #3a3a3e;
   color: white;
 }
@@ -200,6 +207,7 @@ body {
 .search-icon {
   position: absolute;
   left: 12px;
+<<<<<<< HEAD
   width: 16px;
   height: 16px;
   display: flex;
@@ -210,18 +218,417 @@ body {
 
 
 
+=======
+  pointer-events: none;
+}
+
+>>>>>>> 6b89dd9e212921f5c7d4c7ce8e0091574fc9a752
 .page-nav {
   display: flex;
   align-items: center;
   gap: 24px;
 }
 
+<<<<<<< HEAD
 .page-nav a {
   color: #ccc;
   text-decoration: none;
   font-size: 14px;
+=======
+.nav-link {
+  color: #aaa;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: white;
+}
+
+.nav-link.active {
+  color: white;
+  font-weight: bold;
+}
+
+.page-nav a {
+  color: #ccc;
+  text-decoration: none;
+  font-size: 16px;
+>>>>>>> 6b89dd9e212921f5c7d4c7ce8e0091574fc9a752
 }
 
 .page-nav a:hover {
   color: white;
+<<<<<<< HEAD
 }
+=======
+}
+/* СТИЛИ ДЛЯ ВЫПАДАЮЩЕГО СПИСКА */
+
+.search-results {
+  position: absolute;
+  top: 100%;           /* сразу под инпутом */
+  left: 0;
+  width: 100%;
+  background: #1a1a1a;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  margin-top: 8px;
+  max-height: 300px;
+  overflow-y: auto;
+  list-style: none;
+  padding: 8px 0;
+  z-index: 50;
+  display: none;
+  overflow-y: auto;            /* оставляем вертикальную прокрутку */
+  -ms-overflow-style: none;    /* IE и Edge */
+  scrollbar-width: none;       /* Firefox */
+}
+
+.search-results::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.search-results li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+  color: #fff;
+}
+
+.search-results li:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.search-results img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.search-results span {
+  font-size: 14px;
+}
+
+/* ------------- MAIN BANNER ------------- */
+
+/* ------------- MAIN BANNER ------------- */
+
+.main-container {
+  display: flex;
+  background-color: #1a1a1a;
+  border-radius: 22px;
+  overflow: hidden;
+  max-width: 1400px;
+  margin: 40px auto;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+}
+
+.main-banner {
+  flex: 4;
+  position: relative;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+
+.main-banner img {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.banner-text {
+  position: relative;
+  z-index: 2;
+  padding: 20px;
+  background: linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0));
+}
+
+.banner-progress {
+  height: 6px; /* высота бар */
+  width: 100%; /* ширина бар */
+  background-color: #e2e2e2; /* цвет фона */
+  border-radius: 0 0 10px 10px; /* скругленные углы */
+  position: absolute; /* фиксированное положение */
+  bottom: 0; /* помещаем на низ баннера */
+  left: 0;
+  z-index: 2; /* чтобы был поверх других элементов */
+  animation: bannerTimer 5s linear infinite; /* анимация прогресса */
+}
+
+@keyframes bannerTimer {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.banner-btn {
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+.banner-btn:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.banner-btn:active {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* -------- SIDEBAR RANDOM GAMES -------- */
+
+.sidebar {
+  flex: 2;
+  padding: 20px;
+  background-color: #101014;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.game-card {
+  display: inline-flex; /* изменено на inline-flex для выравнивания по горизонтали */
+  align-items: center; /* выравнивание по вертикали */
+  gap: 12px;
+  padding: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  text-decoration: none;
+  color: white;
+}
+
+.game-card img {
+  width: 50px; /* увеличено изображение */
+  height: 50px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.game-card span {
+  color: #ccc;
+  font-size: 16px; /* увеличен размер шрифта */
+  word-break: break-word;
+}
+
+.game-card:hover {
+  transform: scale(1.03);
+  background-color: #ffffff12;
+}
+
+.game-card a {
+  color: inherit; /* наследует цвет от родителя */
+  text-decoration: none; /* убирает подчеркивание */
+}
+
+.game-card a:hover {
+  color: #29a8ff; /* синий цвет при наведении */
+}
+
+
+
+/* -------- DISCOVER MORE -------- */
+
+.discover-more {
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-left: 65px;
+  padding: -10px 10px;
+}
+
+.discover-more a {
+  color: white;
+  text-decoration: none;
+}
+
+.discover-more h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.discover-more h2 span {
+  font-size: 28px;
+  font-weight: 400;
+  margin-right: 850px;
+}
+
+.discover-more a:hover {
+  color: #29a8ff;
+}
+
+
+
+
+.banner-btn {
+  background-color: rgba(255, 255, 255, 0.15); /* полупрозрачная */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+.banner-btn:hover {
+  background-color: rgba(255, 255, 255, 0.25); /* более чёткая при наведении */
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.banner-btn:active {
+  background-color: rgba(255, 255, 255, 0.2); /* чуть темнее при нажатии */
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+@media (max-width: 1200px) {
+  .header-nav {
+    margin-right: 400px;
+    gap: 20px;
+  }
+
+  .discover-more h2 span {
+    margin-right: 400px;
+  }
+}
+
+@media (max-width: 992px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .header-nav {
+    margin-right: 0;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .search-section {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 20px;
+  }
+
+  .main-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    order: -1;
+    width: 100%;
+  }
+
+  .discover-more h2 span {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-right {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .search-bar input {
+    width: 100%;
+  }
+
+  .main-banner {
+    min-height: 300px;
+  }
+
+  .game-card span {
+    font-size: 14px;
+  }
+
+  .game-card img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .discover-more h2 span {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .header-left,
+  .header-right {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .logo {
+    height: 40px;
+  }
+
+  .store-name {
+    font-size: 16px;
+  }
+
+  .header-nav {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .main-container {
+    margin: 20px;
+  }
+
+  .main-banner {
+    min-height: 250px;
+  }
+
+  .banner-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .discover-more h2 {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .discover-more h2 span {
+    font-size: 18px;
+    margin-right: 0;
+  }
+
+  .search-bar input {
+    width: 100%;
+  }
+}
+
+>>>>>>> 6b89dd9e212921f5c7d4c7ce8e0091574fc9a752

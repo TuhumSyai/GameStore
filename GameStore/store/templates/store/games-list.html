@@ -1,0 +1,114 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="{% static 'css/games-list.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/header.css' %}" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="{% static 'img/logo/logo.ico' %}" type="image/x-icon" />
+
+  <title>{{ title }}</title>
+</head>
+<body>
+
+  <!-- ========== HEADER ========== -->
+  {% include 'store/base-header.html' %}
+  
+  <!-- ============================= -->
+  {% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-warning">{{ message }}</div>
+  {% endfor %}
+{% endif %}
+  <!-- ========== SEARCH & NAV ========== -->
+  <div class="search-section">
+    <div class="search-bar">
+      <input id="searchInput" type="text" placeholder="Искать в магазине" />
+      <span class="search-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="11" cy="11" r="8" stroke="#aaa" stroke-width="2"/>
+          <line x1="16.5" y1="16.5" x2="22" y2="22" stroke="#aaa" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </span>
+    </div>
+
+    <nav class="page-nav">
+      <a href="{% url 'index' %}" class="nav-link">Главное</a>
+      <a href="{% url 'gamelist' %}" class="nav-link active">Все игры</a>
+      <a href="#">Новости</a>
+    </nav>
+  </div>
+  <!-- ======================================= -->
+
+  <!-- ========== КАТАЛОГ И ФИЛЬТРЫ ========== -->
+  <div class="catalog-container">
+    
+    <aside class="catalog-filters">
+      <h3>Фильтры</h3>
+
+      <form method="get">
+        <div class="filter-group">
+          <label for="sortSelect">Показать:</label>
+          <select id="sortSelect" name="sort">
+            <option value="added" {% if sort_option == 'added' %}selected{% endif %}>Популярное</option>
+            <option value="-released" {% if sort_option == '-released' %}selected{% endif %}>Новинки</option>
+            <option value="-metacritic" {% if sort_option == '-metacritic' %}selected{% endif %}>Рейтинг</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label>Жанры:</label>
+          <div id="genreFilters">
+            {% for genre in genres %}
+              <label>
+                <input type="checkbox" name="genres" class="genre-box" value="{{ genre.id }}" {% if genre.id in selected_genres %}checked{% endif %}>
+                {{ genre.name }}
+              </label><br>
+            {% endfor %}
+          </div>
+        </div>
+
+        <button type="submit" class="apply-btn">Применить</button>
+        <a href="{% url 'gamelist' %}" class="reset-btn">Сбросить</a>
+      </form>
+    </aside>
+
+    <section id="gamesGrid" class="games-grid">
+      {% for game in games %}
+      <a href="{% url 'game_detail' game.id %}" class="catalog-card">
+        <img src="{{ game.background_image }}" alt="{{ game.name }}">
+        <div class="info">
+          <h4>{{ game.name }}</h4>
+          <p>Релиз: {{ game.released }}</p>
+          <p>Рейтинг: {{ game.rating }}</p>
+        </div>
+      </a>
+      {% endfor %}
+    </section>
+
+  </div>
+
+  <div class="pagination">
+    {% if games.has_previous %}
+      <a href="?page=1{% if sort_option %}&sort={{ sort_option }}{% endif %}{% for genre_id in selected_genres %}&genres={{ genre_id }}{% endfor %}" class="page-link">«</a>
+      <a href="?page={{ games.previous_page_number }}{% if sort_option %}&sort={{ sort_option }}{% endif %}{% for genre_id in selected_genres %}&genres={{ genre_id }}{% endfor %}" class="page-link">‹</a>
+    {% endif %}
+  
+    {% for page_num in games.paginator.page_range %}
+      {% if games.number == page_num %}
+        <span class="page-link active">{{ page_num }}</span>
+      {% elif page_num >= games.number|add:'-2' and page_num <= games.number|add:'2' %}
+        <a href="?page={{ page_num }}{% if sort_option %}&sort={{ sort_option }}{% endif %}{% for genre_id in selected_genres %}&genres={{ genre_id }}{% endfor %}" class="page-link">{{ page_num }}</a>
+      {% endif %}
+    {% endfor %}
+  
+    {% if games.has_next %}
+      <a href="?page={{ games.next_page_number }}{% if sort_option %}&sort={{ sort_option }}{% endif %}{% for genre_id in selected_genres %}&genres={{ genre_id }}{% endfor %}" class="page-link">›</a>
+      <a href="?page={{ games.paginator.num_pages }}{% if sort_option %}&sort={{ sort_option }}{% endif %}{% for genre_id in selected_genres %}&genres={{ genre_id }}{% endfor %}" class="page-link">»</a>
+    {% endif %}
+  </div>
+</body>
+</html>

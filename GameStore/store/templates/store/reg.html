@@ -1,0 +1,42 @@
+{% extends 'store/base_auth.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<h2>Зарегистрироваться</h2>
+<form method="POST" id="register-form" autocomplete="off">
+  {% csrf_token %}
+
+  {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+    <li class="message {{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  {% for field in form %}
+  <div class="input-block">
+    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {{ field }}
+    {% if field.help_text %}
+      <small style="color: gray;">{{ field.help_text }}</small>
+    {% endif %}
+    {% if field.errors %}
+      <div class="error-message email-error password-error" style="color: red;">
+        {{ field.errors|striptags }}
+      </div>
+    {% endif %}
+  </div>
+  {% endfor %}
+
+  <button type="submit" id="submit-btn" {% if not form.is_bound or not form.is_valid %}disabled{% endif %}>
+    Зарегистрироваться
+  </button>
+</form>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/reg-script.js' %}"></script>
+{% endblock %}

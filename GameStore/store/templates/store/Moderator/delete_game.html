@@ -1,0 +1,20 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/moder-game-panel.css' %}">
+</head>
+<body>
+<h1>Удаление игры</h1>
+<p>Вы уверены, что хотите удалить игру "{{ game.name }}"?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Да, удалить</button>
+    <a href="{% url 'moderator_game_panel' %}">Нет, отмена</a>
+</form>
+</body>
+</html>

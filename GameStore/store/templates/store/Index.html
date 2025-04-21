@@ -1,7 +1,13 @@
+<<<<<<< HEAD
+=======
+{% load static %}
+
+>>>>>>> 6b89dd9e212921f5c7d4c7ce8e0091574fc9a752
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
+<<<<<<< HEAD
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
@@ -58,6 +64,93 @@
   
   
   
+=======
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ title }}</title>
+
+  <!-- Стили -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/header.css' %}" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="{% static 'img/logo/logo.ico' %}" type="image/x-icon" />
+</head>
+<body>
+
+  <!-- Шапка сайта -->
+  {% include 'store/base-header.html' %}
+  <!-- ---------------------- -->
+
+  {% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-warning">{{ message }}</div>
+  {% endfor %}
+  {% endif %}
+  
+  <!-- Поиск и навигация -->
+  <section class="search-section">
+    <div class="search-bar">
+      <input id="searchInput" type="text" placeholder="Искать в магазине" aria-label="Поиск по магазинам" />
+      <span class="search-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="11" cy="11" r="8" stroke="#aaa" stroke-width="2" />
+          <line x1="16.5" y1="16.5" x2="22" y2="22" stroke="#aaa" stroke-width="2" stroke-linecap="round" />
+        </svg>
+      </span>
+      <ul id="searchResults" class="search-results" aria-label="Результаты поиска"></ul>
+    </div>
+
+    <nav class="page-nav">
+      <a href="{% url 'index' %}">Главное</a>
+      <a href="{% url 'gamelist' %}">Все игры</a>
+      <a href="#">Новости</a>
+    </nav>
+  </section>
+
+  <!-- Баннер и боковая панель -->
+  <main class="main-container">
+    <section class="main-banner" id="mainBanner">
+      {% if banner_game %}
+        <img id="bannerImage" src="{{ banner_game.background_image }}" alt="{{ banner_game.name }}" />
+        <div class="banner-text">
+          <h1 id="bannerTitle">{{ banner_game.name }}</h1>
+          <p id="bannerDescription">.</p>
+          <a id="bannerDetailBtn" class="banner-btn" href="#">Подробнее</a>
+        </div>
+        <div class="banner-progress"></div>
+      {% else %}
+        <p>Нет игр для отображения.</p>
+      {% endif %}
+    </section>
+
+    {% if random_games %}
+      <aside class="sidebar" id="randomGames">
+        {% for game in random_games %}
+          <div class="game-card" data-index="{{ forloop.counter0 }}">
+            <a href="{% url 'game_detail' game.id %}">
+              <img src="{{ game.background_image }}" alt="{{ game.name }}" />
+              <span>{{ game.name }}</span>
+            </a>
+          </div>
+        {% endfor %}
+      </aside>
+    {% else %}
+      <p class="no-games-msg">Нет доступных игр для отображения.</p>
+    {% endif %}
+  </main>
+
+  <!-- Секция "Откройте новое" -->
+  <section class="discover-more">
+    <a href="{% url 'gamelist' %}" class="discover-link">
+      <h2>Откройте для себя что-то новое <span>›</span></h2>
+    </a>
+  </section>
+
+  <!-- Данные об играх -->
+  {{ games_data|json_script:"games-data" }}
+
+  <!-- Скрипты -->
+  <script src="{% static 'js/bannerslist.js' %}"></script>
+>>>>>>> 6b89dd9e212921f5c7d4c7ce8e0091574fc9a752
 
 </body>
 </html>

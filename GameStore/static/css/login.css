@@ -54,13 +54,51 @@ input {
 input:focus {
   outline: none;
   border-color: #666;
+<<<<<<< HEAD
   background-color: #1e1e22;
+=======
+>>>>>>> 6b89dd9e212921f5c7d4c7ce8e0091574fc9a752
 }
 
 input:valid,
 input:invalid {
   background-color: #1e1e22;
+<<<<<<< HEAD
   box-shadow: none;
+=======
+}
+
+input[type="date"] {
+  background-color: #1e1e22;
+  color: white;
+  border: 1px solid #444;
+  border-radius: 12px;
+  padding: 15px;
+  font-size: 15px;
+  transition: border 0.2s ease;
+  appearance: none;
+}
+
+input[type="date"]:focus {
+  outline: none;
+  border-color: #666;
+}
+
+input[type="date"]:valid,
+input[type="date"]:invalid {
+  background-color: #1e1e22;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background-color: #2f2f33;
+  border-radius: 10px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+input[type="date"]:focus::-webkit-calendar-picker-indicator {
+  background-color: #007bff;
+>>>>>>> 6b89dd9e212921f5c7d4c7ce8e0091574fc9a752
 }
 
 .error-text {
@@ -84,11 +122,19 @@ button[type="submit"] {
   background-color: #2f2f33;
   color: white;
   cursor: not-allowed;
+<<<<<<< HEAD
+=======
+  opacity: 0.6;
+>>>>>>> 6b89dd9e212921f5c7d4c7ce8e0091574fc9a752
 }
 
 button[type="submit"].active {
   background-color: #007bff;
   cursor: pointer;
+<<<<<<< HEAD
+=======
+  opacity: 1;
+>>>>>>> 6b89dd9e212921f5c7d4c7ce8e0091574fc9a752
 }
 
 .divider {
@@ -130,11 +176,18 @@ button[type="submit"].active {
   cursor: pointer;
 }
 
+<<<<<<< HEAD
 .social.steam { background-color: #2b6c9a; background-image: url('../icons/steam.png'); background-size: 35%;}
 .social.facebook { background-color: #2f84f3; background-image: url('../icons/facebook.png'); background-size: 65%;}
 .social.google { background-color: #fefdfd; background-image: url('../icons/google.png'); background-size: 80%;}
 .social.apple { background-color: #ffffff; background-image: url('../icons/apple.png'); background-size: 70%;}
 
+=======
+.social.steam { background-color: #2b6c9a; background-image: url('../img/reg/steam.png'); background-size: 35%;}
+.social.facebook { background-color: #2f84f3; background-image: url('../img/reg/facebook.png'); background-size: 65%;}
+.social.google { background-color: #fefdfd; background-image: url('../img/reg/google.png'); background-size: 80%;}
+.social.apple { background-color: #ffffff; background-image: url('../img/reg/apple.png'); background-size: 70%;}
+>>>>>>> 6b89dd9e212921f5c7d4c7ce8e0091574fc9a752
 
 .New-acc {
   padding-top: 20px;
@@ -144,4 +197,123 @@ button[type="submit"].active {
 .policy {
   padding-top: 15px;
   color: #25b1f2;
+<<<<<<< HEAD
 }
+=======
+}
+
+.checkbox-policy {
+  font-size: 14px;
+  color: #ccc;
+  margin-top: 10px;
+}
+
+.checkbox-policy label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkbox-policy input[type="checkbox"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+  border: 2px solid #555;
+  border-radius: 4px;
+  background-color: transparent;
+  cursor: pointer;
+  position: relative;
+}
+
+.checkbox-policy input[type="checkbox"]:checked {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.checkbox-policy input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 16px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.policy-link {
+  color: #25b1f2;
+  text-decoration: underline;
+}
+
+.policy-link:hover {
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .login-container {
+    width: 90%;
+    padding: 30px 20px;
+  }
+
+  .logo {
+    height: 50px;
+  }
+
+  h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  input, input[type="date"] {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  button[type="submit"] {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .social {
+    height: 44px;
+    background-size: 50%;
+  }
+
+  .checkbox-policy {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-container {
+    padding: 20px 15px;
+    border-radius: 12px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  .divider span {
+    font-size: 13px;
+  }
+
+  .forgot-password,
+  .New-acc,
+  .policy {
+    font-size: 14px;
+  }
+
+  .social {
+    height: 42px;
+    background-size: 45%;
+  }
+}
+>>>>>>> 6b89dd9e212921f5c7d4c7ce8e0091574fc9a752

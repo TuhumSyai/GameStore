@@ -1,0 +1,43 @@
+{% load static %}
+
+
+<header class="header">
+  <div class="header-left">
+    <div class="logo-dropdown">
+      <img src="{% static 'img/logo/logo.png' %}" alt="Логотип" class="logo" />
+      <span class="arrow">▾</span>
+      <nav class="dropdown-menu">
+        <a href="{% url 'index' %}">Главная</a>
+        <a href="{% url 'gamelist' %}">Каталог</a>
+        <a href="myprofil.html">Профиль</a>
+      </nav>
+    </div>
+    <span class="store-name">STORE</span>
+  </div>
+
+  <nav class="header-nav">
+    <a href="#">Поддержка</a>
+  </nav>
+
+  <div class="header-right">
+    <img src="{% static 'img/reg/language.png' %}" alt="Сменить язык" width="22" height="22" />
+
+    {% if user.is_authenticated %}
+      <p class="welcome-text">{{ user.username }}</p>
+      {% if user.is_superuser %}
+        <a href="{% url 'moderator_panel' %}">Панель модераторов</a>
+      {% endif %}
+      {% if user.is_moderator or user.is_superuser %}
+        <a href="{% url 'moderator_game_panel' %}">Панель игр</a>
+      {% endif %}
+      <form method="post" action="{% url 'logout' %}" class="logout-form">
+        {% csrf_token %}
+        <button type="submit" class="login-btn">Выйти</button>
+      </form>
+    {% else %}
+      <a href="{% url 'login' %}" class="login-btn">Войти</a>
+    {% endif %}
+
+    <button class="download-btn">Загрузить</button>
+  </div>
+</header>
