@@ -54,11 +54,18 @@ input {
 input:focus {
   outline: none;
   border-color: #666;
+<<<<<<< HEAD
+  background-color: #1e1e22;
+=======
+>>>>>>> 6b89dd9e212921f5c7d4c7ce8e0091574fc9a752
 }
 
 input:valid,
 input:invalid {
   background-color: #1e1e22;
+<<<<<<< HEAD
+  box-shadow: none;
+=======
 }
 
 input[type="date"] {
@@ -91,6 +98,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 input[type="date"]:focus::-webkit-calendar-picker-indicator {
   background-color: #007bff;
+>>>>>>> 6b89dd9e212921f5c7d4c7ce8e0091574fc9a752
 }
 
 .error-text {
@@ -114,13 +122,19 @@ button[type="submit"] {
   background-color: #2f2f33;
   color: white;
   cursor: not-allowed;
+<<<<<<< HEAD
+=======
   opacity: 0.6;
+>>>>>>> 6b89dd9e212921f5c7d4c7ce8e0091574fc9a752
 }
 
 button[type="submit"].active {
   background-color: #007bff;
   cursor: pointer;
+<<<<<<< HEAD
+=======
   opacity: 1;
+>>>>>>> 6b89dd9e212921f5c7d4c7ce8e0091574fc9a752
 }
 
 .divider {
@@ -162,10 +176,18 @@ button[type="submit"].active {
   cursor: pointer;
 }
 
+<<<<<<< HEAD
+.social.steam { background-color: #2b6c9a; background-image: url('../icons/steam.png'); background-size: 35%;}
+.social.facebook { background-color: #2f84f3; background-image: url('../icons/facebook.png'); background-size: 65%;}
+.social.google { background-color: #fefdfd; background-image: url('../icons/google.png'); background-size: 80%;}
+.social.apple { background-color: #ffffff; background-image: url('../icons/apple.png'); background-size: 70%;}
+
+=======
 .social.steam { background-color: #2b6c9a; background-image: url('../img/reg/steam.png'); background-size: 35%;}
 .social.facebook { background-color: #2f84f3; background-image: url('../img/reg/facebook.png'); background-size: 65%;}
 .social.google { background-color: #fefdfd; background-image: url('../img/reg/google.png'); background-size: 80%;}
 .social.apple { background-color: #ffffff; background-image: url('../img/reg/apple.png'); background-size: 70%;}
+>>>>>>> 6b89dd9e212921f5c7d4c7ce8e0091574fc9a752
 
 .New-acc {
   padding-top: 20px;
@@ -175,6 +197,9 @@ button[type="submit"].active {
 .policy {
   padding-top: 15px;
   color: #25b1f2;
+<<<<<<< HEAD
+}
+=======
 }
 
 .checkbox-policy {
@@ -291,3 +316,4 @@ button[type="submit"].active {
     background-size: 45%;
   }
 }
+>>>>>>> 6b89dd9e212921f5c7d4c7ce8e0091574fc9a752

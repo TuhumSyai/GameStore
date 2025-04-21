@@ -87,52 +87,48 @@ body {
 
 .search-results {
   position: absolute;
-  top: 100%;           /* сразу под инпутом */
+  top: calc(100% + 4px); /* чуть ниже input */
   left: 0;
   width: 100%;
-  background: #1a1a1a;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-  margin-top: 8px;
-  max-height: 300px;
-  overflow-y: auto;
-  list-style: none;
-  padding: 8px 0;
-  z-index: 50;
-  display: none;
-  overflow-y: auto;            /* оставляем вертикальную прокрутку */
-  -ms-overflow-style: none;    /* IE и Edge */
-  scrollbar-width: none;       /* Firefox */
-}
+  z-index: 10;
 
-.search-results::-webkit-scrollbar {
-  width: 0;
-  height: 0;
+  background: #1b1b1f;
+  border: 1px solid #2a2a2e;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  padding: 6px 0;
+  list-style: none;
+  display: none; /* будет показано через JS */
+
 }
 
 .search-results li {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 8px 16px;
+  gap: 10px;
+  padding: 12px 18px;
+  color: #ccc;
+  font-size: 15px;
   cursor: pointer;
-  transition: background 0.2s;
-  color: #fff;
+  transition: background-color 0.2s ease;
 }
 
 .search-results li:hover {
-  background: rgba(255,255,255,0.1);
+  background-color: #2f2f35;
 }
 
 .search-results img {
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   object-fit: cover;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 .search-results span {
-  font-size: 14px;
+  color: #ddd;
+  font-size: 15px;
+  line-height: 1.2;
 }
 
 /* ------------- MAIN BANNER ------------- */

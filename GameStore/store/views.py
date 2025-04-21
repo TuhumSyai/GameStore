@@ -259,6 +259,14 @@ def game_detail(request, game_id):
     }
     return render(request, 'store/game-detail.html', context)
 
+@api_view(['GET'])
+def search_games(request):
+    query = request.GET.get('q', '')
+    if query:
+        games = Game.objects.filter(name__icontains=query)[:10]
+        serializer = GameSerializer(games, many=True)
+        return Response(serializer.data)
+    return Response([])
 
 
 # API view for Game
