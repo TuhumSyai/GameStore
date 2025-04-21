@@ -43,4 +43,5 @@ urlpatterns = [
     path('moderator/games/<int:game_id>/edit/', views.edit_game, name='edit_game'),
     path('moderator/games/<int:game_id>/delete/', views.delete_game, name='delete_game'),
     path('api/', include(router.urls)),
+    path('api/search/', views.search_games, name='search_games'),
 ]
