@@ -139,6 +139,163 @@
     color: #e4e4e4;
   }
   
+/* ========== COMMENTS SECTION ========== */
+
+.game-comments {
+  margin-top: 3rem;
+  background-color: #101014;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 1.5rem;
+}
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.comment-form textarea {
+  padding: 1rem;
+  background-color: #2f2f2f;
+  border: 1px solid #444;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 1rem;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.comment-form button {
+  padding: 1rem;
+  background-color: #0078f2;
+  border-radius: 12px;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.comment-form button:hover {
+  background-color: #005dc1;
+}
+
+.comment-form textarea:focus,
+.comment-form button:focus {
+  outline: none;
+  border-color: #0078f2;
+}
+
+/* Comments List */
+
+.comments-list {
+  margin-top: 2rem;
+}
+
+.comment {
+  background-color: #2f2f2f;
+  padding: 1.2rem;
+  margin-bottom: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.comment-author {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #fff;
+}
+
+.comment-author a {
+  color: #0078f2; /* Цвет ссылки */
+  text-decoration: none;
+}
+
+.comment-author a:hover {
+  text-decoration: underline;
+}
+
+.comment-text {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  color: #ccc;
+  line-height: 1.5;
+}
+
+.comment-date {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #aaa;
+  font-style: italic;
+}
+
+/* No Comments Yet */
+.comments-list p {
+  color: #aaa;
+  font-style: italic;
+}
+
+/* ========== RESPONSIVE ========== */
+
+@media (max-width: 768px) {
+  .game-comments {
+    padding: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+  }
+
+  .comment-form textarea,
+  .comment-form button {
+    font-size: 1rem;
+  }
+
+  .comment-author {
+    font-size: 1rem;
+  }
+
+  .comment-text {
+    font-size: 0.95rem;
+  }
+
+  .comment-date {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .comment-form textarea {
+    font-size: 0.95rem;
+  }
+
+  .comment-form button {
+    font-size: 0.95rem;
+  }
+
+  .comment-author {
+    font-size: 1rem;
+  }
+
+  .comment-text {
+    font-size: 0.9rem;
+  }
+
+  .comment-date {
+    font-size: 0.75rem;
+  }
+}
+
+
+
   /* ========== RESPONSIVE ========== */
   
   @media (max-width: 992px) {

@@ -173,7 +173,7 @@ body {
 .banner-progress {
   height: 6px; /* высота бар */
   width: 100%; /* ширина бар */
-  background-color: #e2e2e2; /* цвет фона */
+  background-color: #ffffff66; /* цвет фона */
   border-radius: 0 0 10px 10px; /* скругленные углы */
   position: absolute; /* фиксированное положение */
   bottom: 0; /* помещаем на низ баннера */

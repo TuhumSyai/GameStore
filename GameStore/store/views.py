@@ -15,9 +15,9 @@ from rest_framework.permissions import IsAdminUser
 
 from .services.rawg import get_games
 from .forms import RegisterForm, LoginForm, GameForm, ProfileUpdateForm
-from .models import Game, Genre, Platform, Store, CustomUser
+from .models import Game, Genre, Platform, Store, CustomUser, Comment
 
-from .serializers import GameSerializer, GenreSerializer, PlatformSerializer, StoreSerializer, UserSerializer
+from .serializers import GameSerializer, GenreSerializer, PlatformSerializer, StoreSerializer, UserSerializer, CommentSerializer
 
 from django.db.models import Q
 
@@ -288,23 +288,31 @@ def gamelist(request):
     return render(request, 'store/games-list.html', context)
 
 
-
-# Детальная страница игры
 def game_detail(request, game_id):
-    api_url = f'http://localhost:8000/api/games/{game_id}/'  # Укажи свой API-адрес здесь
+    # Получаем игру через ORM
+    game = get_object_or_404(Game, id=game_id)
 
-    response = requests.get(api_url)
+    # Обработка формы комментария
+    if request.method == 'POST' and request.user.is_authenticated:
+        content = request.POST.get('content')
+        if content:
+            Comment.objects.create(
+                game=game,  # Связываем комментарий с игрой
+                user=request.user,  # Связываем комментарий с текущим пользователем
+                content=content
+            )
+            return redirect('game_detail', game_id=game_id)  # Перенаправляем после создания комментария
 
-    if response.status_code == 200:
-        game_data = response.json()
-    else:
-        raise Http404("Game not found")
+    # Получаем все комментарии для игры
+    comments = game.comments.all()
 
     context = {
-        'title': f"GameStore - {game_data['name']}",
-        'game': game_data,
+        'title': f"GameStore - {game.name}",
+        'game': game,
+        'comments': comments,  # Передаем комментарии в контекст
     }
     return render(request, 'store/game-detail.html', context)
+
 
 def profile_view(request, user_id):
     user_profile = get_object_or_404(CustomUser, id=user_id)

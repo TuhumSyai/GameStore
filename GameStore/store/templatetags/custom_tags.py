@@ -6,5 +6,5 @@ register = template.Library()
 @register.filter
 def is_online(last_activity):
     if last_activity:
-        return (now() - last_activity).total_seconds() < 300
+        return (now() - last_activity).total_seconds() < 20
     return False
