@@ -19,10 +19,11 @@
   
   <!-- ============================= -->
   {% if messages %}
-  {% for message in messages %}
-    <div class="alert alert-warning">{{ message }}</div>
-  {% endfor %}
-{% endif %}
+    {% for message in messages %}
+      <div class="alert alert-warning">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+
   <!-- ========== SEARCH & NAV ========== -->
   <div class="search-section">
     <div class="search-bar">
@@ -42,7 +43,6 @@
       <a href="#">Новости</a>
     </nav>
   </div>
-  <!-- ======================================= -->
 
   <!-- ========== КАТАЛОГ И ФИЛЬТРЫ ========== -->
   <div class="catalog-container">
@@ -79,40 +79,40 @@
 
     <section id="gamesGrid" class="games-grid">
       {% for game in games %}
-      <a href="{% url 'game_detail' game.id %}" class="catalog-card">
-        <img src="{{ game.background_image }}" alt="{{ game.name }}">
-        <div class="info">
-          <h4>{{ game.name }}</h4>
-          <p>Релиз: {{ game.released }}</p>
-          <p>Рейтинг: {{ game.rating }}</p>
-        </div>
-      </a>
+        <a href="{% url 'game_detail' game.id %}" class="catalog-card">
+          <img src="{{ game.background_image }}" alt="{{ game.name }}">
+          <div class="info">
+            <h4>{{ game.name }}</h4>
+            <p>Релиз: {{ game.released }}</p>
+            <p>Рейтинг: {{ game.rating }}</p>
+          </div>
+        </a>
       {% endfor %}
     </section>
 
   </div>
 
+  <!-- ========== PAGINATION ========== -->
   <div class="pagination">
-    {% if games.has_previous %}
+    {% if page_obj.has_previous %}
       <a href="?page=1{% if sort_option %}&sort={{ sort_option }}{% endif %}{% for genre_id in selected_genres %}&genres={{ genre_id }}{% endfor %}" class="page-link">«</a>
-      <a href="?page={{ games.previous_page_number }}{% if sort_option %}&sort={{ sort_option }}{% endif %}{% for genre_id in selected_genres %}&genres={{ genre_id }}{% endfor %}" class="page-link">‹</a>
+      <a href="?page={{ page_obj.previous_page_number }}{% if sort_option %}&sort={{ sort_option }}{% endif %}{% for genre_id in selected_genres %}&genres={{ genre_id }}{% endfor %}" class="page-link">‹</a>
     {% endif %}
-  
-    {% for page_num in games.paginator.page_range %}
-      {% if games.number == page_num %}
+
+    {% for page_num in page_range %}
+      {% if page_obj.number == page_num %}
         <span class="page-link active">{{ page_num }}</span>
-      {% elif page_num >= games.number|add:'-2' and page_num <= games.number|add:'2' %}
-        <a href="?page={{ page_num }}{% if sort_option %}&sort={{ sort_option }}{% endif %}{% for genre_id in selected_genres %}&genres={{ genre_id }}{% endfor %}" class="page-link">{{ page_num }}</a>
+      {% else %}
+      <a href="?page={{ page_num }}{% if sort_option %}&sort={{ sort_option }}{% endif %}{% for genre_id in selected_genres %}&genres={{ genre_id }}{% endfor %}" class="page-link">{{ page_num }}</a>
       {% endif %}
     {% endfor %}
-  
-    {% if games.has_next %}
-      <a href="?page={{ games.next_page_number }}{% if sort_option %}&sort={{ sort_option }}{% endif %}{% for genre_id in selected_genres %}&genres={{ genre_id }}{% endfor %}" class="page-link">›</a>
-      <a href="?page={{ games.paginator.num_pages }}{% if sort_option %}&sort={{ sort_option }}{% endif %}{% for genre_id in selected_genres %}&genres={{ genre_id }}{% endfor %}" class="page-link">»</a>
+
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}{% if sort_option %}&sort={{ sort_option }}{% endif %}{% for genre_id in selected_genres %}&genres={{ genre_id }}{% endfor %}" class="page-link">›</a>
+      <a href="?page={{ page_obj.paginator.num_pages }}{% if sort_option %}&sort={{ sort_option }}{% endif %}{% for genre_id in selected_genres %}&genres={{ genre_id }}{% endfor %}" class="page-link">»</a>
     {% endif %}
   </div>
+
+  <script src="{% static 'js/search.js' %}"></script>
 </body>
-
-<script src="{% static 'js/search.js' %}"></script>
-
 </html>

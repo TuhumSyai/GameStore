@@ -63,6 +63,7 @@ from django.conf import settings
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=150, unique=True)
+    bio = models.TextField(blank=True, null=True)   
     birthdate = models.DateField(null=True, blank=True)
     avatar = models.ImageField(
         upload_to='avatars/',
@@ -73,6 +74,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_moderator = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)
+    last_activity = models.DateTimeField(default=timezone.now)
 
     objects = CustomUserManager()
 

@@ -1,7 +1,9 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
-from .models import Game
+from django.contrib.auth.hashers import check_password
+from django.contrib.auth import password_validation
+from .models import Game, CustomUser
 import datetime
 
 User = get_user_model()
@@ -90,3 +92,63 @@ class GameForm(forms.ModelForm):
             'platforms': forms.CheckboxSelectMultiple,
             'stores': forms.CheckboxSelectMultiple,
         }
+
+class ProfileUpdateForm(forms.ModelForm):
+    current_password = forms.CharField(
+        label='Текущий пароль',
+        widget=forms.PasswordInput,
+        required=False
+    )
+    new_password = forms.CharField(
+        label='Новый пароль',
+        widget=forms.PasswordInput,
+        required=False
+    )
+    confirm_password = forms.CharField(
+        label='Подтвердите новый пароль',
+        widget=forms.PasswordInput,
+        required=False
+    )
+
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'email', 'birthdate', 'avatar', 'bio']
+
+        widgets = {
+            'birthdate': forms.DateInput(attrs={'type': 'date'}),
+            'bio': forms.Textarea(attrs={
+                'rows': 4,
+                'placeholder': 'Расскажите немного о себе...',
+                'style': 'resize: vertical; max-height: 200px; background-color: #1e1e22; color: white; border: none; padding: 10px; border-radius: 10px;',
+            }),
+        }
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        current_password = cleaned_data.get('current_password')
+        new_password = cleaned_data.get('new_password')
+        confirm_password = cleaned_data.get('confirm_password')
+
+        if new_password or confirm_password:
+            if not current_password:
+                raise ValidationError("Введите текущий пароль для смены пароля.")
+            if not self.user.check_password(current_password):
+                raise ValidationError("Текущий пароль неверен.")
+            if new_password != confirm_password:
+                raise ValidationError("Новый пароль и подтверждение не совпадают.")
+            password_validation.validate_password(new_password, self.user)
+
+        return cleaned_data
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        new_password = self.cleaned_data.get('new_password')
+        if new_password:
+            user.set_password(new_password)
+        if commit:
+            user.save()
+        return user

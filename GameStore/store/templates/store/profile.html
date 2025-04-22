@@ -1,0 +1,68 @@
+{% load static %}
+{% load custom_tags %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Профиль — {{ user_profile.username }}</title>
+
+  <!-- Стили -->
+  <link rel="stylesheet" href="{% static 'css/header.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/profile.css' %}" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="{% static 'img/logo/logo.ico' %}" type="image/x-icon" />
+</head>
+<body>
+
+  <!-- Шапка -->
+  {% include 'store/base-header.html' %}
+
+  <!-- Сообщения -->
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-warning">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+
+  <!-- Профиль -->
+  <main class="profile-main">
+    <div class="profile-card">
+      <div class="profile-avatar">
+        {% if user_profile.avatar and user_profile.avatar.url %}
+            <img src="{{ user_profile.avatar.url }}" alt="{{ user_profile.username }}">
+        {% else %}
+            <img src="{{ MEDIA_URL }}avatars/default.png" alt="Default Avatar">
+        {% endif %}
+      </div>
+      <div class="profile-info">
+        <h1>{{ user_profile.username }}</h1>
+        <p><strong>Статус:</strong> {% if user_profile.last_activity|is_online %}Онлайн{% else %}Офлайн{% endif %}</p>
+
+        {% if user_profile.bio %}
+          <p class="user-bio">{{ user_profile.bio }}</p>
+        {% else %}
+          <p class="user-bio placeholder">Пользователь пока ничего о себе не рассказал.</p>
+        {% endif %}
+
+        <p><strong>Email:</strong> {{ user_profile.email }}</p>
+
+        {% if user_profile.birthdate %}
+          <p><strong>Дата рождения:</strong> {{ user_profile.birthdate|date:"d.m.Y" }}</p>
+        {% endif %}
+
+        <p><strong>Зарегистрирован:</strong> {{ user_profile.date_joined|date:"d.m.Y" }}</p>
+
+        {% if request.user == user_profile %}
+          <a href="{% url 'edit_profile' %}" class="edit-profile-btn">Редактировать профиль</a>
+        {% endif %}
+      </div>
+    </div>
+  </main>
+
+  <!-- Скрипты -->
+  <script src="{% static 'js/profile.js' %}"></script>
+
+</body>
+</html>

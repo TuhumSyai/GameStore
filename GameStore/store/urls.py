@@ -18,11 +18,14 @@ from django.urls import path, include
 from django.contrib.auth.views import LogoutView
 from . import views
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 from rest_framework.routers import DefaultRouter
 
 
 router = DefaultRouter()
-router.register(r'games', views.GameViewSet)
+router.register(r'games', views.GameViewSet, basename='game')
 router.register(r'genres', views.GenreViewSet)
 router.register(r'platforms', views.PlatformViewSet)
 router.register(r'stores', views.StoreViewSet)
@@ -44,4 +47,11 @@ urlpatterns = [
     path('moderator/games/<int:game_id>/delete/', views.delete_game, name='delete_game'),
     path('api/', include(router.urls)),
     path('api/search/', views.search_games, name='search_games'),
+    path('profile/', views.my_profile_view, name='my_profile'),    
+    path('profile/edit/', views.edit_profile_view, name='edit_profile'),
+    path('profile/<int:user_id>/', views.profile_view, name='profile')
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

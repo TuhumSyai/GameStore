@@ -23,7 +23,7 @@
     <img src="{% static 'img/reg/language.png' %}" alt="Сменить язык" width="22" height="22" />
 
     {% if user.is_authenticated %}
-      <p class="welcome-text">{{ user.username }}</p>
+      <p class="welcome-text"><a href="{% url 'my_profile' %}">{{ user.username }}</a></p>
       {% if user.is_superuser %}
         <a href="{% url 'moderator_panel' %}">Панель модераторов</a>
       {% endif %}

@@ -1,0 +1,71 @@
+/* Общие стили для фона */
+body {
+  background-color: #101014; /* Однородный фон */
+  color: white;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Карточка профиля с анимацией */
+.profile-main {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 24px;
+  background-color: #101014;
+  border-radius: 20px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Стили для аватара с эффектом */
+.profile-avatar img {
+  width: 160px;
+  height: 160px;
+  border-radius: 16px;
+  object-fit: cover;
+  border: 2px solid #333;
+}
+
+/* Статус пользователя */
+.profile-info h1 {
+  font-size: 28px;
+  color: white;
+  position: relative;
+}
+
+.profile-info h1::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #34D399; /* Зеленый для онлайн */
+  margin-left: 10px;
+  margin-top: -5px;
+}
+
+/* Плавные анимации для кнопок */
+.edit-profile-btn {
+  margin-top: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 10px 22px;
+  border-radius: 10px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.2s ease;
+  backdrop-filter: blur(4px);
+}
+
+.edit-profile-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-4px);
+}
+
+/* Добавление градиента к кнопке редактирования */
+.edit-profile-btn {
+  background: #29a8ff;;
+}

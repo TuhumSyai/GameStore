@@ -1,23 +1,33 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, Http404
 from django.contrib.auth import get_user_model, login, authenticate
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import user_passes_test, login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
+from django_filters.rest_framework import DjangoFilterBackend
 
-from rest_framework import viewsets
+from rest_framework import viewsets, filters
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.permissions import IsAdminUser
+
+
 
 from .services.rawg import get_games
-from .forms import RegisterForm, LoginForm, GameForm
+from .forms import RegisterForm, LoginForm, GameForm, ProfileUpdateForm
 from .models import Game, Genre, Platform, Store, CustomUser
 
 from .serializers import GameSerializer, GenreSerializer, PlatformSerializer, StoreSerializer, UserSerializer
 
 from django.db.models import Q
 
-import random
+from django.conf import settings
+
+from django.utils.timezone import now
+
+import requests
+
+import math
 
 User = get_user_model()
 
@@ -177,6 +187,7 @@ def loginForm(request):
     context = {
         'title': 'GameStore - Авторизация',
         'form': form,
+        
     }
     return render(request, 'store/login.html', context)
 
@@ -211,53 +222,137 @@ def game_api(request):
 def gamelist(request):
     sort_option = request.GET.get('sort', 'added')
     selected_genres = request.GET.getlist('genres')
-    page = request.GET.get('page', 1)
+    page = int(request.GET.get('page', 1))
 
-    games = Game.objects.all()
+    params = {
+        'ordering': {
+            'added': '-id',
+            '-released': '-released',
+            '-metacritic': '-rating',
+        }.get(sort_option, '-id'),
+        'page': page
+    }
 
+    # Добавляем жанры
     if selected_genres:
-        games = games.filter(genres__id__in=selected_genres).distinct()
+        params['genres'] = selected_genres
 
-    if not games.exists():
-        messages.warning(request, 'В базе данных нет игр по выбранным фильтрам.')
+    print(f"Request params: {params}")  # Логируем параметры запроса
 
-    if sort_option == 'added':
-        games = games.order_by('-id')
-    elif sort_option == '-released':
-        games = games.order_by('-released')
-    elif sort_option == '-metacritic':
-        games = games.order_by('-rating')
-
-    paginator = Paginator(games, 15)
     try:
-        games_page = paginator.page(page)
-    except PageNotAnInteger:
-        games_page = paginator.page(1)
-    except EmptyPage:
-        games_page = paginator.page(paginator.num_pages)
+        response = requests.get('http://127.0.0.1:8000/api/games/', params=params)
+        response.raise_for_status()
+        data = response.json()
+        print(f"Response data: {data}")  # Логируем данные из ответа API
+
+        games_data = data.get('results', [])
+        count = data.get('count', 0)
+        next_page_url = data.get('next')
+        prev_page_url = data.get('previous')
+
+        # Корректно вычисляем количество страниц с использованием math.ceil()
+        total_pages = math.ceil(count / 10)  # количество страниц, округляем вверх
+    except requests.RequestException:
+        messages.error(request, 'Не удалось получить данные из API.')
+        games_data = []
+        count = 0
+        next_page_url = None
+        prev_page_url = None
+        total_pages = 1
+
+    print(f"Total pages: {total_pages}")  # Логируем total_pages
+
+    # Создаём page_range с учётом общей численности страниц
+    page_range = range(
+        max(1, page - 2),
+        min(page + 3, total_pages + 1)
+    )
 
     context = {
         'title': 'GameStore - Игры',
-        'games': games_page,
+        'games': games_data,
         'genres': Genre.objects.all(),
         'selected_genres': list(map(int, selected_genres)),
         'sort_option': sort_option,
-        'paginator': paginator,
-        'page_obj': games_page,
+        'page_obj': {
+            'number': page,
+            'paginator': {'num_pages': total_pages},
+            'has_previous': prev_page_url is not None,
+            'has_next': next_page_url is not None,
+            'previous_page_number': page - 1 if prev_page_url else None,
+            'next_page_number': page + 1 if next_page_url else None,
+        },
+        'page_range': page_range
     }
 
     return render(request, 'store/games-list.html', context)
 
 
+
 # Детальная страница игры
 def game_detail(request, game_id):
-    game = get_object_or_404(Game, id=game_id)
+    api_url = f'http://localhost:8000/api/games/{game_id}/'  # Укажи свой API-адрес здесь
+
+    response = requests.get(api_url)
+
+    if response.status_code == 200:
+        game_data = response.json()
+    else:
+        raise Http404("Game not found")
 
     context = {
-        'title': f"GameStore - {game.name}",
-        'game': game,
+        'title': f"GameStore - {game_data['name']}",
+        'game': game_data,
     }
     return render(request, 'store/game-detail.html', context)
+
+def profile_view(request, user_id):
+    user_profile = get_object_or_404(CustomUser, id=user_id)
+    return render(request, 'store/profile.html', {
+        'user_profile': user_profile,
+        'MEDIA_URL': settings.MEDIA_URL, 
+    })
+
+@login_required
+def my_profile_view(request):
+    user = request.user
+    is_online = False
+    if user.last_activity:
+        delta = now() - user.last_activity
+        is_online = delta.total_seconds() < 300
+
+    context = {
+        'title': 'Профиль',
+        'user_profile': user,
+        'MEDIA_URL': settings.MEDIA_URL, 
+        'online_status': is_online,
+    }
+
+    return render(request, 'store/profile.html', context)
+
+@login_required
+def edit_profile_view(request):
+    user = request.user
+
+    if request.method == 'POST':
+        form = ProfileUpdateForm(request.POST, request.FILES, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Профиль успешно обновлён.')
+            return redirect('profile')  # Название URL для просмотра профиля
+        else:
+            messages.error(request, 'Пожалуйста, исправьте ошибки в форме.')
+    else:
+        form = ProfileUpdateForm(instance=user)
+
+    context = {
+        'title': 'Редактировать профиль',
+        'form': form,
+        'MEDIA_URL': settings.MEDIA_URL, 
+    }
+
+    return render(request, 'store/edit_profile.html', context)
+
 
 @api_view(['GET'])
 def search_games(request):
@@ -273,23 +368,34 @@ def search_games(request):
 class GameViewSet(viewsets.ModelViewSet):
     queryset = Game.objects.all()
     serializer_class = GameSerializer
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    filterset_fields = ['genres', 'name']
+    ordering_fields = ['released', 'rating', 'id']
+    ordering = ['-id']
 
 # API view for Genre
 class GenreViewSet(viewsets.ModelViewSet):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
+    permission_classes = [IsAdminUser]
+
 
 # API view for Platform
 class PlatformViewSet(viewsets.ModelViewSet):
     queryset = Platform.objects.all()
     serializer_class = PlatformSerializer
+    permission_classes = [IsAdminUser]
+
 
 # API view for Store
 class StoreViewSet(viewsets.ModelViewSet):
     queryset = Store.objects.all()
     serializer_class = StoreSerializer
+    permission_classes = [IsAdminUser]
+
 
 # API view for User
 class UserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
+    permission_classes = [IsAdminUser]
