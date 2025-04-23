@@ -347,7 +347,7 @@ def edit_profile_view(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Профиль успешно обновлён.')
-            return redirect('profile')  # Название URL для просмотра профиля
+            return redirect('my_profile')  # Название URL для просмотра профиля
         else:
             messages.error(request, 'Пожалуйста, исправьте ошибки в форме.')
     else:
@@ -406,4 +406,9 @@ class StoreViewSet(viewsets.ModelViewSet):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
+    permission_classes = [IsAdminUser]
+
+class CommentsViewSet(viewsets.ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
     permission_classes = [IsAdminUser]

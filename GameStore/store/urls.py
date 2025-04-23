@@ -30,6 +30,7 @@ router.register(r'genres', views.GenreViewSet)
 router.register(r'platforms', views.PlatformViewSet)
 router.register(r'stores', views.StoreViewSet)
 router.register(r'users', views.UserViewSet)
+router.register(r'comments', views.CommentsViewSet)
 
 
 urlpatterns = [
