@@ -55,4 +55,25 @@ stripe listen --forward-to localhost:8000/payment/webhook/
 CVC: Любой
 ZIP: Любой
 
+## 📁 Структура проекта
 
+GameStore/
+├── store/                  # Приложение магазина
+│   ├── services/           
+│   │   ├── tasks.py           
+│   │   ├── utils.py           
+│   ├── models.py           # Модели Game, Genre, Purchase, CustomUser
+│   ├── views.py            # Основная логика
+│   ├── templates/store/    # HTML-шаблоны
+├── static/                 # Статические файлы
+│   ├── css
+│   ├── img
+│   ├── js
+├── media/                  # Медиа-файлы
+│   ├── avatars/
+├── manage.py
+├── .env
+.gitignore
+requirements.txt
+README.md
+stripe.exe
