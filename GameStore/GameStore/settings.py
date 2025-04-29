@@ -152,9 +152,9 @@ CELERY_TASK_SERIALIZER = 'json'
 from celery.schedules import crontab
 
 CELERY_BEAT_SCHEDULE = {
-    'update-games-every-24-hours': {
-        'task': 'store.services.tasks.update_games',  # путь к задаче
-        'schedule': crontab(minute=0, hour=0),  # Каждые 24 часа в полночь
+    'update-games-every-5-minutes': {
+        'task': 'store.services.tasks.update_games',
+        'schedule': crontab(minute='*/5'),  # Каждые 5 минут
     },
 }
 
