@@ -55,6 +55,7 @@
         <p><strong>Зарегистрирован:</strong> {{ user_profile.date_joined|date:"d.m.Y" }}</p>
 
         {% if request.user == user_profile %}
+          <a href="{% url 'purchases' %}" class="edit-profile-btn">Мои игры</a>
           <a href="{% url 'edit_profile' %}" class="edit-profile-btn">Редактировать профиль</a>
         {% endif %}
       </div>

@@ -17,9 +17,9 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .services.rawg import get_games
 from .forms import RegisterForm, LoginForm, GameForm, ProfileUpdateForm
-from .models import Game, Genre, Platform, Store, CustomUser, Comment
+from .models import Game, Genre, Platform, Store, CustomUser, Comment, Purchase
 
-from .serializers import GameSerializer, GenreSerializer, PlatformSerializer, StoreSerializer, UserSerializer, CommentSerializer
+from .serializers import GameSerializer, GenreSerializer, PlatformSerializer, StoreSerializer, UserSerializer, CommentSerializer, PurchaseSerializer
 
 from django.db.models import Q
 
@@ -35,6 +35,7 @@ import stripe
 
 User = get_user_model()
 
+import json
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -301,6 +302,8 @@ def game_detail(request, game_id):
     # Получаем игру через ORM
     game = get_object_or_404(Game, id=game_id)
 
+    user_has_purchased = request.user.is_authenticated and request.user.purchases.filter(game=game).exists()
+
     # Обработка формы комментария
     if request.method == 'POST' and request.user.is_authenticated:
         content = request.POST.get('content')
@@ -308,7 +311,7 @@ def game_detail(request, game_id):
             Comment.objects.create(
                 game=game,  # Связываем комментарий с игрой
                 user=request.user,  # Связываем комментарий с текущим пользователем
-                content=content
+                content=content,
             )
             return redirect('game_detail', game_id=game_id)  # Перенаправляем после создания комментария
 
@@ -319,6 +322,7 @@ def game_detail(request, game_id):
         'title': f"GameStore - {game.name}",
         'game': game,
         'comments': comments,  # Передаем комментарии в контекст
+        'user_has_purchased': user_has_purchased,
     }
     return render(request, 'store/game-detail.html', context)
 
@@ -381,16 +385,18 @@ def search_games(request):
     return Response([])
 
 
+@login_required
 @csrf_exempt
 def create_checkout_session(request, game_id):
     game = Game.objects.get(id=game_id)
+    price = int(game.price_kzt * 100)
 
     session = stripe.checkout.Session.create(
         payment_method_types=['card'],
         line_items=[{
             'price_data': {
                 'currency': 'kzt',
-                'unit_amount': 1000 * 100,  # 1000 ₸ → 100000 тыйын
+                'unit_amount': price,
                 'product_data': {
                     'name': game.name,
                 },
@@ -400,6 +406,10 @@ def create_checkout_session(request, game_id):
         mode='payment',
         success_url='http://localhost:8000/success/',
         cancel_url='http://localhost:8000/cancel/',
+        metadata={
+        'user_id': request.user.id,
+        'game_id': game.id,
+    }
     )
 
     return redirect(session.url, code=303)
@@ -409,6 +419,89 @@ def success_view(request):
 
 def cancel_view(request):
     return render(request, 'store/payment/cancel.html')
+
+
+@login_required
+def purchases(request):
+    sort_option = request.GET.get('sort', 'added')
+    selected_genres = request.GET.getlist('genres')
+    page = int(request.GET.get('page', 1))
+
+    # Получаем купленные пользователем игры
+    purchased_games = Game.objects.filter(purchases__user=request.user)
+
+    # Фильтруем по жанрам
+    if selected_genres:
+        purchased_games = purchased_games.filter(genres__id__in=selected_genres).distinct()
+
+    # Сортировка
+    ordering = {
+        'added': '-id',
+        '-released': '-released',
+        '-metacritic': '-rating',
+    }.get(sort_option, '-id')
+    purchased_games = purchased_games.order_by(ordering)
+
+    # Пагинация
+    paginator = Paginator(purchased_games, 10)
+    page_obj = paginator.get_page(page)
+    page_range = range(
+        max(1, page_obj.number - 2),
+        min(page_obj.number + 3, paginator.num_pages + 1)
+    )
+
+    context = {
+        'title': 'Мои покупки',
+        'purchased_games': page_obj.object_list,
+        'genres': Genre.objects.all(),
+        'selected_genres': list(map(int, selected_genres)),
+        'sort_option': sort_option,
+        'page_obj': page_obj,
+        'page_range': page_range
+    }
+
+    return render(request, 'store/purchases.html', context)
+
+@csrf_exempt
+def stripe_webhook(request):
+    payload = request.body
+    sig_header = request.META.get('HTTP_STRIPE_SIGNATURE')
+    endpoint_secret = settings.STRIPE_WEBHOOK_SECRET
+
+    if sig_header is None:
+        return HttpResponse("Missing Stripe Signature Header", status=400)
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, endpoint_secret
+        )
+    except ValueError as e:
+        return HttpResponse(f"Invalid payload: {e}", status=400)
+    except stripe.error.SignatureVerificationError as e:
+        return HttpResponse(f"Signature verification failed: {e}", status=400)
+
+    if event['type'] == 'checkout.session.completed':
+        session = event['data']['object']
+        metadata = session.get('metadata', {})
+
+        user_id = metadata.get('user_id')
+        game_id = metadata.get('game_id')
+
+        try:
+            user = CustomUser.objects.get(id=user_id)
+            game = Game.objects.get(id=game_id)
+        except CustomUser.DoesNotExist:
+            return HttpResponse(f"User not found: {user_id}", status=404)
+        except Game.DoesNotExist:
+            return HttpResponse(f"Game not found: {game_id}", status=404)
+
+        Purchase.objects.create(
+            user=user,
+            game=game,
+            price_kzt=game.price_kzt
+        )
+
+    return HttpResponse(status=200)
 
 # API view for Game
 class GameViewSet(viewsets.ModelViewSet):
@@ -449,4 +542,9 @@ class UserViewSet(viewsets.ModelViewSet):
 class CommentsViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
+    permission_classes = [IsAdminUser]
+
+class PurchaseViewSet(viewsets.ModelViewSet):
+    queryset = Purchase.objects.all()
+    serializer_class = PurchaseSerializer
     permission_classes = [IsAdminUser]

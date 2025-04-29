@@ -86,7 +86,7 @@ class LoginForm(forms.Form):
 class GameForm(forms.ModelForm):
     class Meta:
         model = Game
-        fields = ['name', 'description', 'released', 'rating', 'rawg_id', 'background_image', 'genres', 'platforms', 'stores']
+        fields = ['name', 'description', 'released', 'rating', 'rawg_id', 'background_image', 'genres', 'platforms', 'stores', 'price_kzt']
         widgets = {
             'genres': forms.CheckboxSelectMultiple,
             'platforms': forms.CheckboxSelectMultiple,

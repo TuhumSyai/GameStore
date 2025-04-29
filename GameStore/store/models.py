@@ -31,6 +31,7 @@ class Game(models.Model):
     genres = models.ManyToManyField(Genre)
     platforms = models.ManyToManyField(Platform)
     stores = models.ManyToManyField(Store)
+    price_kzt = models.DecimalField(max_digits=10, decimal_places=2, default=1000)
 
     def __str__(self):
         return self.name
@@ -93,3 +94,15 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Комментарий от {self.user.username} для {self.game.name}"
+    
+class Purchase(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='purchases')
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='purchases')
+    purchase_date = models.DateTimeField(auto_now_add=True)
+    price_kzt = models.DecimalField(max_digits=10, decimal_places=2)
+
+    class Meta:
+        unique_together = ('user', 'game')  # пользователь не может купить одну игру дважды
+
+    def __str__(self):
+        return f"{self.user.username} купил {self.game.name} за {self.price_kzt}₸"

@@ -31,6 +31,8 @@ router.register(r'platforms', views.PlatformViewSet)
 router.register(r'stores', views.StoreViewSet)
 router.register(r'users', views.UserViewSet)
 router.register(r'comments', views.CommentsViewSet)
+router.register(r'purchase', views.PurchaseViewSet)
+
 
 
 urlpatterns = [
@@ -54,6 +56,8 @@ urlpatterns = [
     path('buy/<int:game_id>/', views.create_checkout_session, name='create_checkout_session'),
     path('success/', views.success_view, name='success'),
     path('cancel/', views.cancel_view, name='cancel'),
+    path('purchases/', views.purchases, name='purchases'),
+    path('payment/webhook/', views.stripe_webhook, name='stripe_webhook'),
 ]
 
 

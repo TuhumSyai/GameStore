@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Game, Genre, Platform, Store, CustomUser, Comment
+from .models import Game, Genre, Platform, Store, CustomUser, Comment, Purchase
 
 class GenreSerializer(serializers.ModelSerializer):
     class Meta:
@@ -37,3 +37,8 @@ class GameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Game
         fields = ['id', 'name', 'description', 'released', 'rating', 'rawg_id', 'background_image', 'genres', 'platforms', 'stores', 'comments']
+
+class PurchaseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Purchase
+        fields = ['id', 'user', 'game', 'purchase_date', 'price_kzt']
