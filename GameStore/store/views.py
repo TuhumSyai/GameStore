@@ -11,6 +11,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser
 
+from django.views.decorators.csrf import csrf_exempt
+
 
 
 from .services.rawg import get_games
@@ -29,7 +31,14 @@ import requests
 
 import math
 
+import stripe
+
 User = get_user_model()
+
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
+
 
 
 # Главная страница
@@ -371,6 +380,35 @@ def search_games(request):
         return Response(serializer.data)
     return Response([])
 
+
+@csrf_exempt
+def create_checkout_session(request, game_id):
+    game = Game.objects.get(id=game_id)
+
+    session = stripe.checkout.Session.create(
+        payment_method_types=['card'],
+        line_items=[{
+            'price_data': {
+                'currency': 'kzt',
+                'unit_amount': 1000 * 100,  # 1000 ₸ → 100000 тыйын
+                'product_data': {
+                    'name': game.name,
+                },
+            },
+            'quantity': 1,
+        }],
+        mode='payment',
+        success_url='http://localhost:8000/success/',
+        cancel_url='http://localhost:8000/cancel/',
+    )
+
+    return redirect(session.url, code=303)
+
+def success_view(request):
+    return render(request, 'store/payment/success.html')
+
+def cancel_view(request):
+    return render(request, 'store/payment/cancel.html')
 
 # API view for Game
 class GameViewSet(viewsets.ModelViewSet):

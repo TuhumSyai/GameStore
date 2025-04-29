@@ -64,6 +64,15 @@
             {% endfor %}
           </div>
         </div>
+
+        <div class="sidebar-section">
+          <h3>Купить игру</h3>
+          <form action="{% url 'create_checkout_session' game.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="buy-button">Купить за 1000 ₸</button>
+          </form>
+        </div>
+        
       </aside>
     </section>
     <section class="game-comments">

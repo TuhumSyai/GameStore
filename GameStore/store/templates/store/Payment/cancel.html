@@ -1,0 +1,17 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Оплата отменена</title>
+  <link rel="stylesheet" href="{% static 'css/cancel.css' %}">
+</head>
+<body>
+  <div class="message-box">
+    <h1>Оплата отменена</h1>
+    <p>Вы отменили платёж. Ничего страшного — можно попробовать снова в любое время.</p>
+    <a href="{% url 'index' %}">Вернуться на главную</a>
+  </div>
+</body>
+</html>

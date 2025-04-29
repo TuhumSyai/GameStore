@@ -243,6 +243,24 @@ h2 {
   font-style: italic;
 }
 
+.buy-button {
+  background-color: #5c67f2;
+  color: #fff;
+  font-weight: 600;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+  transition: background-color 0.2s ease;
+}
+
+.buy-button:hover {
+  background-color: #4a54e1;
+}
+
+
 /* ========== RESPONSIVE ========== */
 
 @media (max-width: 768px) {

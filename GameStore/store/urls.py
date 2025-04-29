@@ -50,7 +50,10 @@ urlpatterns = [
     path('api/search/', views.search_games, name='search_games'),
     path('profile/', views.my_profile_view, name='my_profile'),    
     path('profile/edit/', views.edit_profile_view, name='edit_profile'),
-    path('profile/<int:user_id>/', views.profile_view, name='profile')
+    path('profile/<int:user_id>/', views.profile_view, name='profile'),
+    path('buy/<int:game_id>/', views.create_checkout_session, name='create_checkout_session'),
+    path('success/', views.success_view, name='success'),
+    path('cancel/', views.cancel_view, name='cancel'),
 ]
 
 

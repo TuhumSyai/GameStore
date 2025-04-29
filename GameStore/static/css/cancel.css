@@ -1,0 +1,39 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8f9fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .message-box {
+    background: #fff;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+
+  .message-box h1 {
+    color: #dc3545;
+    font-size: 28px;
+  }
+
+  .message-box p {
+    margin: 16px 0;
+  }
+
+  .message-box a {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #5c67f2;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+  }
+
+  .message-box a:hover {
+    background-color: #4a54e1;
+  }
