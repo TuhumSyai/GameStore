@@ -62,14 +62,14 @@ GameStore/
 │   ├── services/           
 │   │   ├── tasks.py           
 │   │   ├── utils.py           
-│   ├── models.py           # Модели Game, Genre, Purchase, CustomUser
-│   ├── views.py            # Основная логика
-│   ├── templates/store/    # HTML-шаблоны
-├── static/                 # Статические файлы
+│   ├── models.py           
+│   ├── views.py            
+│   ├── templates/store/    
+├── static/                 
 │   ├── css
 │   ├── img
 │   ├── js
-├── media/                  # Медиа-файлы
+├── media/                  
 │   ├── avatars/
 ├── manage.py
 ├── .env
