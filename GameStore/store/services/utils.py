@@ -78,11 +78,11 @@ import redis
 
 def connect_to_redis():
     r = redis.Redis(
-        host='redis-12310.crce198.eu-central-1-3.ec2.redns.redis-cloud.com',
-        port=12310,
+        host='redis-13415.crce198.eu-central-1-3.ec2.redns.redis-cloud.com',
+        port=13415,
         decode_responses=True,
         username='default',
-        password='gbdQVm9isCgQUn2VfS2SKcC4ZPcKNaFR'
+        password='Ze7ee0H2CecRHgjQdCEEyPBb6xB03xdO'
     )
     return r
 

@@ -47,6 +47,11 @@ python manage.py runserver
 stripe login
 stripe listen --forward-to localhost:8000/payment/webhook/
 
+8. **Зауск Celery для авто-обновления БД игр**
+
+celery -A GameStore worker --loglevel=info --pool=solo
+celery -A GameStore beat --loglevel=info
+
 ## 🧪 Тестовая оплата
 
 Вы можете использовать тестовые карты Stripe, например:
