@@ -16,11 +16,9 @@
   </div>
 
   <nav class="header-nav">
-    <a href="#">Поддержка</a>
   </nav>
 
   <div class="header-right">
-    <img src="{% static 'img/reg/language.png' %}" alt="Сменить язык" width="22" height="22" />
 
     {% if user.is_authenticated %}
       <p class="welcome-text"><a href="{% url 'my_profile' %}">{{ user.username }}</a></p>

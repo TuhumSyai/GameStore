@@ -2,16 +2,22 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.contrib.auth.hashers import check_password
-from django.contrib.auth import password_validation
+from django.contrib.auth import password_validation, authenticate
+from django.forms.widgets import ClearableFileInput
+from django.utils.translation import gettext_lazy as _
 from .models import Game, CustomUser
 import datetime
 
 User = get_user_model()
 
 
-class RegisterForm(forms.ModelForm):
+class CustomClearableFileInput(ClearableFileInput):
+    initial_text = _('Текущий файл')
+    input_text = _('Выбрать файл')
+    clear_checkbox_label = _('Удалить текущий аватар')
 
-    
+
+class RegisterForm(forms.ModelForm):
     password = forms.CharField(
         label="Пароль",
         widget=forms.PasswordInput,
@@ -30,6 +36,11 @@ class RegisterForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'birthdate', 'password', 'password2', 'agree']
+        labels = {
+            'username': 'Имя пользователя',
+            'email': 'Электронная почта',
+            'birthdate': 'Дата рождения',
+        }
         widgets = {
             'birthdate': forms.DateInput(attrs={'type': 'date'}),
         }
@@ -37,7 +48,7 @@ class RegisterForm(forms.ModelForm):
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if User.objects.filter(email=email).exists():
-            raise ValidationError("Пользователь с таким email уже существует.")
+            raise ValidationError("Пользователь с такой электронной почтой уже существует.")
         return email
 
     def clean_username(self):
@@ -52,7 +63,7 @@ class RegisterForm(forms.ModelForm):
             today = datetime.date.today()
             age = today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
             if age < 13:
-                raise ValidationError("Регистрация доступна с 13 лет.")
+                raise ValidationError("Регистрация доступна только с 13 лет.")
         return birthdate
 
     def clean(self):
@@ -62,14 +73,15 @@ class RegisterForm(forms.ModelForm):
         if password and password2 and password != password2:
             self.add_error('password2', "Пароли не совпадают.")
 
+
 class LoginForm(forms.Form):
     username = forms.CharField(
         max_length=150,
         required=True,
-        label='Логин',
+        label='Имя пользователя',
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Введите логин',
+            'placeholder': 'Введите имя пользователя',
             'autocomplete': 'username',
         })
     )
@@ -83,10 +95,34 @@ class LoginForm(forms.Form):
         })
     )
 
+    def clean(self):
+        cleaned_data = super().clean()
+        username = cleaned_data.get("username")
+        password = cleaned_data.get("password")
+
+        if username and password:
+            user = authenticate(username=username, password=password)
+            if user is None:
+                raise forms.ValidationError("Неверное имя пользователя или пароль")
+            self.user = user
+        return cleaned_data
+
 class GameForm(forms.ModelForm):
     class Meta:
         model = Game
         fields = ['name', 'description', 'released', 'rating', 'rawg_id', 'background_image', 'genres', 'platforms', 'stores', 'price_kzt']
+        labels = {
+            'name': 'Название',
+            'description': 'Описание',
+            'released': 'Дата выхода',
+            'rating': 'Рейтинг',
+            'rawg_id': 'RAWG ID',
+            'background_image': 'Фоновое изображение',
+            'genres': 'Жанры',
+            'platforms': 'Платформы',
+            'stores': 'Магазины',
+            'price_kzt': 'Цена (₸)',
+        }
         widgets = {
             'genres': forms.CheckboxSelectMultiple,
             'platforms': forms.CheckboxSelectMultiple,
@@ -113,8 +149,15 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ['username', 'email', 'birthdate', 'avatar', 'bio']
-
+        labels = {
+            'username': 'Имя пользователя',
+            'email': 'Электронная почта',
+            'birthdate': 'Дата рождения',
+            'avatar': 'Аватар',
+            'bio': 'О себе',
+        }
         widgets = {
+            'avatar': CustomClearableFileInput,
             'birthdate': forms.DateInput(attrs={'type': 'date'}),
             'bio': forms.Textarea(attrs={
                 'rows': 4,
@@ -126,6 +169,17 @@ class ProfileUpdateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
+
+    def clean_birthdate(self):
+        birthdate = self.cleaned_data.get('birthdate')
+        if birthdate:
+            today = datetime.date.today()
+            age = today.year - birthdate.year - (
+                (today.month, today.day) < (birthdate.month, birthdate.day)
+            )
+            if age < 13:
+                raise ValidationError("Вам должно быть не менее 13 лет для использования сайта.")
+        return birthdate
 
     def clean(self):
         cleaned_data = super().clean()

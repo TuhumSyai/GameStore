@@ -7,16 +7,14 @@
 <h2>Войти</h2>
 <form id="login-form" method="post" autocomplete="off">
   {% csrf_token %}
-  
-  {% if messages %}
-    <ul class="messages">
-      {% for message in messages %}
-      <li class="{{ message.tags }}">{{ message }}</li>
-      {% endfor %}
-    </ul>
+
+  {% if form.non_field_errors %}
+  <div class="error-message" style="color:red;">
+    {% for error in form.non_field_errors %}
+      <p>{{ error }}</p>
+    {% endfor %}
+  </div>
   {% endif %}
-  
-  <div class="error-message" style="display:none; color:red;"></div>
 
   <div class="input-block">
     {{ form.username.label_tag }}
@@ -34,18 +32,11 @@
     {% endif %}
   </div>
 
-  <button type="submit" id="submit-btn" disabled>Войти</button>
+  <button type="submit">Войти</button>
 </form>
-
 {% endblock %}
 
 {% block extra_links %}
 <a href="{% url 'reg' %}" class="New-acc">Создать учетную запись</a>
 <a href="#" class="policy">Политика конфиденциальности</a>
 {% endblock %}
-
-
-{% block extra_js %}
- <script src="{% static 'js/log-script.js' %}"></script>
-{% endblock %}
->>>>>>> 6b89dd9e212921f5c7d4c7ce8e0091574fc9a752

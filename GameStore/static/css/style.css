@@ -171,15 +171,15 @@ body {
 }
 
 .banner-progress {
-  height: 6px; /* высота бар */
-  width: 100%; /* ширина бар */
-  background-color: #ffffff66; /* цвет фона */
-  border-radius: 0 0 10px 10px; /* скругленные углы */
-  position: absolute; /* фиксированное положение */
-  bottom: 0; /* помещаем на низ баннера */
+  height: 6px; 
+  width: 100%; 
+  background-color: #ffffff66; 
+  border-radius: 0 0 10px 10px; 
+  position: absolute; 
+  bottom: 0; 
   left: 0;
-  z-index: 2; /* чтобы был поверх других элементов */
-  animation: bannerTimer 5s linear infinite; /* анимация прогресса */
+  z-index: 2; 
+  animation: bannerTimer 5s linear infinite; 
 }
 
 @keyframes bannerTimer {
@@ -270,7 +270,7 @@ body {
 .discover-more {
   max-width: 1200px;
   margin: 0 auto;
-  margin-left: 65px;
+  margin-left: 200px;
   padding: -10px 10px;
 }
 
@@ -297,9 +297,6 @@ body {
 .discover-more a:hover {
   color: #29a8ff;
 }
-
-
-
 
 .banner-btn {
   background-color: rgba(255, 255, 255, 0.15); /* полупрозрачная */

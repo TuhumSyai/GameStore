@@ -31,12 +31,9 @@
   </div>
   {% endfor %}
 
-  <button type="submit" id="submit-btn" {% if not form.is_bound or not form.is_valid %}disabled{% endif %}>
+  <button type="submit" id="submit-btn" {% if not form.is_bound or not form.is_valid %}{% endif %}>
     Зарегистрироваться
   </button>
 </form>
 {% endblock %}
 
-{% block extra_js %}
-<script src="{% static 'js/reg-script.js' %}"></script>
-{% endblock %}

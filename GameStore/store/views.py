@@ -181,24 +181,18 @@ def add_game(request):
 
 # Авторизация пользователя
 def loginForm(request):
-    form = LoginForm(request.POST or None)
+    context = {'title': 'GameStore - Авторизация'}
 
-    if request.method == 'POST' and form.is_valid():
-        username = form.cleaned_data.get('username')
-        password = form.cleaned_data.get('password')
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            login(request, user)
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            login(request, form.user)
             return redirect('/')
         else:
-            messages.error(request, 'Неверный логин или пароль')
+            context['form'] = form
+            return render(request, 'store/login.html', context)
 
-    context = {
-        'title': 'GameStore - Авторизация',
-        'form': form,
-        
-    }
+    context['form'] = LoginForm()
     return render(request, 'store/login.html', context)
 
 
